@@ -1,7 +1,8 @@
 	#Proposal
-i want to build a platformer game with two levels
+I want to build a platformer game with two levels with one enemy and coins and a finish flag
 
 	##Need to have list
- _ mapping the collisions on levels
- _ 
+ - mapping the collisions on player 
+ -
+ - 
  
