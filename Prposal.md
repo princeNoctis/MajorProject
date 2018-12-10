@@ -1,6 +1,7 @@
-	Proposal
-i want to build a platformer mini game with two levels
+	# Proposal
+i want to build a platformer game with two levels
 
-	Need to have list
- map
+	# Need to have list
+ _ mapping the collisions on levels
+ _ 
  
