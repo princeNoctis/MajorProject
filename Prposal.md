@@ -6,4 +6,7 @@ I want to build a platformer game with two levels with one enemy and coins and a
  - mapping the collisions on player 
  -
  - 
- 
+### Nice to Have ###
+ - 
+ -
+ -
