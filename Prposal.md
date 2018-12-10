@@ -17,4 +17,4 @@ coins and a finish flag.
  - Some classic arcade music
  - Sound on collsion
  - Colorful Menu's and settings 
- - More creative designs 
+ - Creative designs for characters
