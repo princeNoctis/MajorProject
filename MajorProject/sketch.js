@@ -20,8 +20,19 @@ function draw() {
 
 
 function mainMenu(){
-  background(0);
-  fill("yellow");
-  text("Hello",width/2,height/2);
-  textSize(12);
+  if (menuNum === 0){
+    background(0);
+    fill("yellow");
+    text("Main Menu",width/2,height/2);
+    textSize(50);
+    textAlign(CENTER, CENTER);
+  }
+  else{
+    background("green");
+    text("Game",width/2,height/2);
+  }
+}
+
+function loadBackground(){
+  
 }
