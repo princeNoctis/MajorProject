@@ -3,8 +3,8 @@ body, html {
     margin: 0;
     height: 100%;
     overflow: hidden;
+    text-align: center;
 }
 ::-webkit-scrollbar {
     display: none;
 }
- 
