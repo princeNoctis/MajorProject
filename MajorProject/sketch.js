@@ -26,12 +26,16 @@ function mainMenu(){
     background(0);
     fill("yellow");
     text("Main Menu",width/2,height/2);
-    textSize(50);
+    textSize(60);
     textAlign(CENTER, CENTER);
+
+    text("Play",width/2,400);
+    textAlign(CENTER);
   }
   else{
     loadBackground();
   }
+
 }
 
 function loadBackground(){
