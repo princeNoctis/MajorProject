@@ -6,10 +6,12 @@
 // - describe what you did to take this project "above and beyond"
 
 let menuNum;
+let levelBackground;
 
 
 function setup() {
   createCanvas(800, 600);
+  levelBackground = loadImage("assets/lvlbckgrnd.png");
   menuNum = 0;
 }
 
@@ -28,11 +30,10 @@ function mainMenu(){
     textAlign(CENTER, CENTER);
   }
   else{
-    background("green");
-    text("Game",width/2,height/2);
+    loadBackground();
   }
 }
 
 function loadBackground(){
-  
+  background(levelBackground);
 }
