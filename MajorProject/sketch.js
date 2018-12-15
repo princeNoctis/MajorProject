@@ -9,7 +9,7 @@ let menuNum;
 let playButtonX = 400 ,playButtonY = 400;
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
-let tiles,levelToLoad,lines,tilesWidth,tilesHeight;
+let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
 let character,coins,platform,koomba;
 
 
@@ -20,11 +20,12 @@ function preload(){
   platform = loadImage("assets/platform.png");
   // coins = loadImage("images/coin.png");
   // koomba = loadImage("images/koomba.png");
+  levelBackground = loadImage("assets/lvlbckgrnd.png");
 }
 
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(900, 600);
   lives = loadImage("assets/Heart.png");
   menuNum = 0;
   tilesHeight = lines.length;
@@ -43,6 +44,7 @@ function draw() {
 }
 
 function display() {
+  image(levelBackground, 0, 0, width, height);
   for (let y = 0; y < tilesHeight; y++) {
     for (let x = 0; x < tilesWidth; x++) {
       showTile(tiles[x][y], x, y);
@@ -79,28 +81,29 @@ function mainMenu(){
   }
   else if (menuNum === 1){
     display();
+    drawLives();
   }
 }
 
 function showTile(location, x, y) {
-  if (location === "0") {
+  if (location === "p") {
     image(platform, x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
   }
 }
 
 
-function loadBackground(){
-  for(let x = 0; 0 < tilesWidth;x++){
-    for(let y = 0; 0 < tilesHeight; y++){
-      if(tiles[x][y] === "0"){
-        fill("blue");
-      }
-      if (tiles[x][y]=== "1"){
-        fill("purple");
-      }
-    }
-  }
-}
+// function loadBackground(){
+//   for(let x = 0; 0 < tilesWidth;x++){
+//     for(let y = 0; 0 < tilesHeight; y++){
+//       if(tiles[x][y] === "0"){
+//         fill("blue");
+//       }
+//       if (tiles[x][y]=== "1"){
+//         fill("purple");
+//       }
+//     }
+//   }
+// }
 
 function drawLives(){
   imageMode(CORNER);
