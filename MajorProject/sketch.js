@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 let menuNum;
-let playButtonX = 400 ,playButtonY = 400;
+let playButtonX = 400 ,playButtonY = 400,playerX = 50,playerY = 200,platformX,platformY;
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
 let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
@@ -82,6 +82,7 @@ function mainMenu(){
   else if (menuNum === 1){
     display();
     drawLives();
+    player();
   }
 }
 
@@ -92,27 +93,23 @@ function showTile(location, x, y) {
 }
 
 
-// function loadBackground(){
-//   for(let x = 0; 0 < tilesWidth;x++){
-//     for(let y = 0; 0 < tilesHeight; y++){
-//       if(tiles[x][y] === "0"){
-//         fill("blue");
-//       }
-//       if (tiles[x][y]=== "1"){
-//         fill("purple");
-//       }
-//     }
-//   }
-// }
-
 function drawLives(){
   imageMode(CORNER);
   image(lives,50,50,25,25);
   image(lives,75,50,25,25);
   image(lives,100,50,25,25);
 }
-function player(){
 
+function collideWithPlayer(){
+  let onGrund = collidePointRect(playerX, playerY, platformX, platformY);
+  if (playerY > platformY){
+    playerY = platformY-playerY;
+  }
+}
+
+function player(){
+  fill("green");
+  rect(playerX,playerY,50,100);
 }
 
 function createEmpty2dArray(cols, rows) {

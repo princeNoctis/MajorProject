@@ -1,4 +1,4 @@
-00000000000000000000000
+0000000000000000000000000000000000000000000
 0
 0
 0
@@ -10,14 +10,16 @@
 0
 0
 0
+0         pppp
 0
 0
 0
 0
 0
 0
-0
-0ppppppppppppppppppppppp
-0
-0
-00
+ppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppp
