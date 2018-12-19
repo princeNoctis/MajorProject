@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 let menuNum;
-let playButtonX = 400 ,playButtonY = 400,playerX = 50,playerY = 200,platformX,platformY;
+let playButtonX = 400 ,playButtonY = 400,playerX=50,playerY=50,platformX,platformY,velocity,speedX;
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
 let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
@@ -41,6 +41,7 @@ function setup() {
 
 function draw() {
   mainMenu();
+  move();
 }
 
 function display() {
@@ -83,6 +84,7 @@ function mainMenu(){
     display();
     drawLives();
     player();
+    collideWithPlayer();
   }
 }
 
@@ -92,7 +94,6 @@ function showTile(location, x, y) {
   }
 }
 
-
 function drawLives(){
   imageMode(CORNER);
   image(lives,50,50,25,25);
@@ -101,9 +102,11 @@ function drawLives(){
 }
 
 function collideWithPlayer(){
-  let onGrund = collidePointRect(playerX, playerY, platformX, platformY);
-  if (playerY > platformY){
-    playerY = platformY-playerY;
+  if (playerY < platformY){
+    playerY = 50;
+  }
+  if (playerX < platformX){
+    playerX = 50;
   }
 }
 
@@ -127,5 +130,36 @@ function mousePressed() {
   let startGame = collidePointRect(mouseX, mouseY, playButtonX, playButtonY, 150, 50);
   if (startGame === true && menuNum === 0){
     menuNum = 1;
+  }
+}
+
+
+function move(){
+  if (keyIsDown(87)) {
+    playerY -= 10;
+  }
+  if (keyIsDown(65)) {
+    playerX -= 10;
+  }
+  if (keyIsDown(83)) {
+    playerY += 10;
+  }
+  if (keyIsDown(68)) {
+    playerX += 10;
+  }
+  for (let x = 0; x <tilesWidth; x++) {
+    for (let y = 0; y <tilesHeight; y++) {
+      if (tiles[x][y] === "p") {
+        fill(0, 0, 0);
+        rect(platformX,platformY,tilesWidth,tilesHeight);
+      }
+      // else {
+      //   fill(random(255), random(255), random(255));
+      //   rect(x * 50 - nx, y * 50 - ny, 50, 50);
+      //   if (wid > x * 50 && hei > y * 50 && wid < x * 50 + 50 && hei < y * 50 + 50 && finish === 0) {
+      //     finish = 1;
+      //   }
+      // }
+    }
   }
 }
