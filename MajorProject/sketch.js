@@ -10,7 +10,7 @@ let playButtonX = 400 ,playButtonY = 400,playerX=50,playerY=50,platformX,platfor
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
 let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
-let character,coins,platform,koomba;
+let character,players,test,coins,platform,koomba;
 
 
 function preload(){
@@ -25,6 +25,8 @@ function preload(){
 
 
 function setup() {
+  players = createSprite(200,200,50,50);
+  players.addAnimation("normal","assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
   createCanvas(900, 600);
   lives = loadImage("assets/Heart.png");
   menuNum = 0;
@@ -39,9 +41,10 @@ function setup() {
   }
 }
 
-function draw() {
+function draw(x,y) {
   mainMenu();
   move();
+  test = rect(x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
 }
 
 function display() {
@@ -90,7 +93,8 @@ function mainMenu(){
 
 function showTile(location, x, y) {
   if (location === "p") {
-    image(platform, x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
+    fill("green");
+    test;
   }
 }
 
@@ -108,11 +112,12 @@ function collideWithPlayer(){
   if (playerX < platformX){
     playerX = 50;
   }
+  players.collide(test);
 }
 
 function player(){
   fill("green");
-  rect(playerX,playerY,50,100);
+  // players = rect(playerX,playerY,50,100);
 }
 
 function createEmpty2dArray(cols, rows) {
@@ -147,19 +152,18 @@ function move(){
   if (keyIsDown(68)) {
     playerX += 10;
   }
-  for (let x = 0; x <tilesWidth; x++) {
-    for (let y = 0; y <tilesHeight; y++) {
-      if (tiles[x][y] === "p") {
-        fill(0, 0, 0);
-        rect(platformX,platformY,tilesWidth,tilesHeight);
-      }
-      // else {
-      //   fill(random(255), random(255), random(255));
-      //   rect(x * 50 - nx, y * 50 - ny, 50, 50);
-      //   if (wid > x * 50 && hei > y * 50 && wid < x * 50 + 50 && hei < y * 50 + 50 && finish === 0) {
-      //     finish = 1;
-      //   }
-      // }
-    }
-  }
+  // for (let x = 0; x <tilesWidth; x++) {
+  //   for (let y = 0; y <tilesHeight; y++) {
+  //     if (tiles[x][y] === "p") {
+  //       rect(platformX,platformY,tilesWidth,tilesHeight);
+  //     }
+  //     // else {
+  //     //   fill(random(255), random(255), random(255));
+  //     //   rect(x * 50 - nx, y * 50 - ny, 50, 50);
+  //     //   if (wid > x * 50 && hei > y * 50 && wid < x * 50 + 50 && hei < y * 50 + 50 && finish === 0) {
+  //     //     finish = 1;
+  //     //   }
+  //     // }
+  //   }
+  // }
 }
