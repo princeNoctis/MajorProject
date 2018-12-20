@@ -10,11 +10,19 @@ let playButtonX = 400 ,playButtonY = 400,playerX=50,playerY=50,platformX,platfor
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
 let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
-let character,players,test,coins,platform,koomba;
+let character,players,test,coins,koomba;
 
+
+let platform;
+let platforms; // Group for collisions
+let playerSprite;
+
+// Gravitational letant - applied to player velocity inside draw()
+let gravityOfPlayer = 0.3;
+let playerOnGround;
 
 function preload(){
-  randomImg = loadAnimation("assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
+  players = loadAnimation("assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
   levelToLoad = "assets/Lvl.1.txt";
   lines = loadStrings(levelToLoad);
   platform = loadImage("assets/platform.png");
@@ -26,8 +34,7 @@ function preload(){
 
 function setup() {
   players = createSprite(200,200,50,50);
-  players.addAnimation("normal","assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
-  createCanvas(900, 600);
+  createCanvas(tiles*tilesWidth, tiles*tilesHeight);
   lives = loadImage("assets/Heart.png");
   menuNum = 0;
   tilesHeight = lines.length;
@@ -39,12 +46,15 @@ function setup() {
       tiles[x][y] = tileType;
     }
   }
+  playerOnGround = false;
+  platform = new Group();
 }
 
 function draw(x,y) {
   mainMenu();
   move();
-  test = rect(x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
+  drawSprites();
+  physics();
 }
 
 function display() {
@@ -81,13 +91,14 @@ function mainMenu(){
     textSize(40);
     text("Platformer!", 130, 150);
     pop();
-    animation(randomImg,300,400);
+    // animation(randomImg,300,400);
   }
   else if (menuNum === 1){
     display();
     drawLives();
     player();
-    collideWithPlayer();
+    // collideWithPlayer();
+    // test = rect(x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
   }
 }
 
@@ -104,16 +115,16 @@ function drawLives(){
   image(lives,75,50,25,25);
   image(lives,100,50,25,25);
 }
-
-function collideWithPlayer(){
-  if (playerY < platformY){
-    playerY = 50;
-  }
-  if (playerX < platformX){
-    playerX = 50;
-  }
-  players.collide(test);
-}
+//
+// function collideWithPlayer(){
+//   if (playerY < platformY){
+//     playerY = 50;
+//   }
+//   if (playerX < platformX){
+//     playerX = 50;
+//   }
+//   players.collide(test);
+// }
 
 function player(){
   fill("green");
@@ -152,18 +163,56 @@ function move(){
   if (keyIsDown(68)) {
     playerX += 10;
   }
-  // for (let x = 0; x <tilesWidth; x++) {
-  //   for (let y = 0; y <tilesHeight; y++) {
-  //     if (tiles[x][y] === "p") {
-  //       rect(platformX,platformY,tilesWidth,tilesHeight);
-  //     }
-  //     // else {
-  //     //   fill(random(255), random(255), random(255));
-  //     //   rect(x * 50 - nx, y * 50 - ny, 50, 50);
-  //     //   if (wid > x * 50 && hei > y * 50 && wid < x * 50 + 50 && hei < y * 50 + 50 && finish === 0) {
-  //     //     finish = 1;
-  //     //   }
-  //     // }
-  //   }
-  // }
+  for (let i = 0; i < tiles.length; i++) {
+    // If the value is 0, place nothing
+    if (tiles[i] === 0) {
+      // Do nothing
+    } else if (tiles[i] === "p") {
+      // If the value is 1, place the platform
+      let x = i % tilesWidth * tiles + tiles/2;
+      let y = floor(i / tilesWidth) * tiles + tiles/2;
+      let platformSprite = createSprite(x, y);
+      platformSprite.addImage(platform);
+      platformSprite.setCollider( 0, 0, tiles, tiles - 8);
+      platforms.add(platformSprite);
+      //platformSprite.debug = true;
+    }
+  }
+  playerSprite = createSprite(2*tiles + tiles/2, height/2);
+  playerSprite.addAnimation(players);
+}
+
+function physics(){
+  playerSprite.collide(platforms, stopplayer());
+	// Apply gravityOfPlayer to player's velocity if the player is in the air
+	if (!playerOnGround) {
+		playerSprite.velocity.x += gravityOfPlayer;
+	}
+
+	// ---- PLAYER MOVEMENT ---- //
+	// Left and Right player movement
+	if (keyDown(LEFT_ARROW)) {
+		playerSprite.position.x -= 1;
+	}
+	if (keyDown(RIGHT_ARROW)) {
+		playerSprite.position.x += 1;
+	}
+	// Player Jump
+	if (keyDown(UP_ARROW) && playerOnGround) {
+		// We jump by immediately changing our y velocity to a negative number (since a negative y means "up" in p5.js)
+		// This has the effect of adding a force to counteract gravityOfPlayer. This ONLY works because we are changing the
+		// sprite's velocity by gravityOfPlayer above
+    playerSprite.velocity.x = -7;
+    playerOnGround = false;
+  }
+}
+function stopplayer(players, platform) {
+  playerSprite.setVelocity(0, 1);
+  console.log("Alien collided with brick");
+  // If the alien is moving up, don't stop it's movement
+	// If I'm moving down and collide with brick, then stop movement
+	if (players.velocity.x >= 0) {
+		playerOnGround = true;
+		players.velocity.x = 0;
+	}
 }
