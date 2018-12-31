@@ -114,13 +114,16 @@ function drawLives(){
   image(lives,75,50,25,25);
   image(lives,100,50,25,25);
 }
+
 function player(){
   fill("green");
-  character = createSprite(400,200);
+  character = createSprite(400,200,100,100);
+  character.addAnimation("standing","assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
 }
 function brick(){
   fill("blue");
-  bricks = createSprite(400,200);
+  bricks = createSprite(400,200,50,50);
+  bricks.addImage("normal","assets/platform.png");
 }
 
 function createEmpty2dArray(cols, rows) {
@@ -141,7 +144,7 @@ function mousePressed() {
   }
 }
 
-function keyIsPressed(){
+function keyPressed(){
   if (keyWentDown(38)){
     character.y += 5;
   }
