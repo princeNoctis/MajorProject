@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 let menuNum;
-let playButtonX = 400 ,playButtonY = 400;
+let playButtonX = 400 ,playButtonY = 400,px=0,py=0;
 let levelBackground,lives,randomImg;
 let menuMusic,gameMusic;
 let tiles,levelToLoad,lines,tilesWidth,tilesHeight,changeRes;
@@ -26,7 +26,9 @@ function preload(){
 
 function setup() {
   createCanvas(900, 600);
-  lives = loadImage("assets/Heart.png");
+  lives = loadImage("assets/Heart.png")
+  character = createSprite(px,py,100,100);
+  character.addAnimation("standing","assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
   menuNum = 0;
   tilesHeight = lines.length;
   tilesWidth = lines[0].length;
@@ -41,6 +43,18 @@ function setup() {
 
 function draw() {
   mainMenu();
+  if (keyIsDown(LEFT_ARROW)) { // "a"
+    px += 10;
+  }
+  if (keyIsDown(RIGHT_ARROW)) { // "d"
+    px -= 10;
+  }
+  if (keyIsDown(UP_ARROW)) { // "w"
+    py += 10;
+  }
+  if (keyIsDown(DOWN_ARROW)) { // "s"
+    py -= 10;
+  }
 }
 
 function display() {
@@ -82,48 +96,23 @@ function mainMenu(){
   else if (menuNum === 1){
     display();
     drawLives();
-    player();
-    brick();
+    drawSprites();
     character.collide(bricks);
   }
 }
 
 function showTile(location, x, y) {
   if (location === "p") {
-    image(platform, x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
+    bricks = createSprite(x * tilesWidth, y * tilesHeight, tilesWidth, tilesHeight);
+    bricks.addImage(loadImage("assets/platform.png"));
   }
 }
-
-
-// function loadBackground(){
-//   for(let x = 0; 0 < tilesWidth;x++){
-//     for(let y = 0; 0 < tilesHeight; y++){
-//       if(tiles[x][y] === "0"){
-//         fill("blue");
-//       }
-//       if (tiles[x][y]=== "1"){
-//         fill("purple");
-//       }
-//     }
-//   }
-// }
 
 function drawLives(){
   imageMode(CORNER);
   image(lives,50,50,25,25);
   image(lives,75,50,25,25);
   image(lives,100,50,25,25);
-}
-
-function player(){
-  fill("green");
-  character = createSprite(400,200,100,100);
-  character.addAnimation("standing","assets/frame_0_delay-0.05s.png","assets/frame_1_delay-0.05s.png");
-}
-function brick(){
-  fill("blue");
-  bricks = createSprite(400,200,50,50);
-  bricks.addImage("normal","assets/platform.png");
 }
 
 function createEmpty2dArray(cols, rows) {
@@ -144,17 +133,6 @@ function mousePressed() {
   }
 }
 
-function keyPressed(){
-  if (keyWentDown(38)){
-    character.y += 5;
-  }
-  if (keyWentDown(40)){
-    character.y -= 5;
-  }
-  if (keyWentDown(37)){
-    character.x -= 5;
-  }
-  if (keyWentDown(39)){
-    character.x += 5;
-  }
+function movePlayer() {
+
 }
