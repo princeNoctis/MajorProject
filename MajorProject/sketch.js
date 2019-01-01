@@ -5,50 +5,50 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-var gamestate;
-var titleScreen, gameScreen, endScreen;
+let gamestate;
+let titleScreen, gameScreen, endScreen;
 
-var batImage;
-var batSprite;
-var batStamina = 10;
-var batX;
-var batY;
+let batImage;
+let batSprite;
+let batStamina = 10;
+let batX;
+let batY;
 
-var GRAVITY = 2;
-var FLAP = -15;
-var counter = 0;
+let GRAVITY = 2;
+let FLAP = -15;
+let counter = 0;
 
-var grassImage;
-var grassSprite;
-var LeftWallSprite;
-var RightWallSprite;
-var finishImage;
-var finishSprite;
+let grassImage;
+let grassSprite;
+let LeftWallSprite;
+let RightWallSprite;
+let finishImage;
+let finishSprite;
 
-var cloudSprite1;
-var cloudSprite2;
-var cloudSprite3;
+let cloudSprite1;
+let cloudSprite2;
+let cloudSprite3;
 
-var bombSprite;
-var bombImage;
+let bombSprite;
+let bombImage;
 
-var rechargers;
-var bombs;
+let rechargers;
+let bombs;
 
-var clouds;
+let clouds;
 
-var newEnemy;
-var newBoost;
+let newEnemy;
+let newBoost;
 
-var jumpSound;
+let jumpSound;
 
-var myheight = 7000;
+let myheight = 7000;
 
 function preload() {
 	batImage = loadImage("bat_00.png");
 	grassImage = loadImage("grass.png");
-	bomb = loadImage("bomb_0.png");
-	gas = loadImage("gas_0.png");
+	repellent = loadImage("bomb_0.png");
+	moth = loadImage("gas_0.png");
 	jumpSound = loadSound("jumpsound.wav");
 	song = loadSound("Spring.mp3");
 	finishImage = loadImage("finish.png");
@@ -62,7 +62,7 @@ function preload() {
 
 function setup() {
 
-	// 🎶 SONG 🎶 //
+
 	song.setVolume(0.05);
 	song.play();
 	song.loop();
