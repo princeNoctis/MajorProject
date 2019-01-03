@@ -240,3 +240,94 @@ function setup() {
 	peepSprite.addAnimation("flying","assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
   // peepSprite.addImage("still","assets/bat2.png");
 }
+
+
+function draw() {
+
+
+	if (gamestate === 0) {
+
+		image(titleScreen, 0, 0, 800, 600);
+		camera.position.y = titleScreen.position
+
+		if (keyWentDown("SPACE")) {
+			newGame();
+		}
+
+	} else if (gamestate === 1) {
+
+		background("purple");
+
+		camera.position.y = peepSprite.position.y;
+
+		if (keyWentDown('w')) {
+			peepSprite.velocity.y = FLAP;
+			peepSprite.velocity.y += GRAVITY;
+			peepSprite.changeAnimation("flapping");
+			//peepSprite.animation.goToFrame(peepSprite.animation.images.length-1);
+			peepStamina = peepStamina - 1;
+			counter = 0;
+			if (jumpSound.isPlaying() == false) {
+				jumpSound.play()
+				jumpSound.setVolume(0.5);
+			}
+		}
+
+		if (keyWentUp('w')) {
+			peepSprite.velocity.y = 1;
+			peepSprite.velocity.y += GRAVITY;
+			peepSprite.changeAnimation("still");
+		}
+
+		if (keyDown('w')) {
+			counter++;
+			if (counter >= 35) {
+				peepStamina = peepStamina - 1;
+				counter = 0;
+			}
+		}
+
+
+		if (keyDown('a')) {
+			peepSprite.position.x -= 9
+		}
+
+		if (keyDown('d')) {
+			peepSprite.position.x += 9
+		}
+
+		peepSprite.collide(grassSprite);
+		peepSprite.collide(LeftWallSprite);
+		peepSprite.collide(RightWallSprite);
+
+		peepSprite.overlap(bombs, loseStamina);
+		peepSprite.overlap(rechargers, gainStamina);
+
+		if (peepSprite.collide(finishSprite)) {
+			gamestate = 0;
+			if (keyWentDown("SPACE")) {
+				newGame();
+			}
+		}
+
+		textSize(15);
+		textFont("Monaco");
+		if (peepStamina <= 5) {
+			fill(186, 0, 0);
+		}
+		else if (peepStamina >= 6) {
+			fill(26, 140, 55);
+		}
+		text("Stamina", width - 110, peepSprite.position.y);
+		textSize(15);
+		textFont("Monaco");
+		fill(0);
+		text(peepStamina, width - 40, peepSprite.position.y);
+
+		drawSprites();
+		drawSprites(bombs);
+	}
+
+	if (peepStamina <= 0) {
+		gamestate = 2
+	}
