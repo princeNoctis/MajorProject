@@ -67,8 +67,6 @@ function preload() {
 }
 
 function setup() {
-
-	// 🎶 SONG 🎶 //
 	song.setVolume(0.05);
 	song.play();
 	song.loop();
@@ -260,26 +258,26 @@ function draw() {
 
 		camera.position.y = peepSprite.position.y;
 
-		if (keyWentDown('w')) {
+		if (keyWentDown("w")) {
 			peepSprite.velocity.y = FLAP;
 			peepSprite.velocity.y += GRAVITY;
 			peepSprite.changeAnimation("flapping");
 			//peepSprite.animation.goToFrame(peepSprite.animation.images.length-1);
 			peepStamina = peepStamina - 1;
 			counter = 0;
-			if (jumpSound.isPlaying() == false) {
+			if (jumpSound.isPlaying() === false) {
 				jumpSound.play()
 				jumpSound.setVolume(0.5);
 			}
 		}
 
-		if (keyWentUp('w')) {
+		if (keyWentUp("w")) {
 			peepSprite.velocity.y = 1;
 			peepSprite.velocity.y += GRAVITY;
 			peepSprite.changeAnimation("still");
 		}
 
-		if (keyDown('w')) {
+		if (keyDown("w")) {
 			counter++;
 			if (counter >= 35) {
 				peepStamina = peepStamina - 1;
@@ -288,11 +286,11 @@ function draw() {
 		}
 
 
-		if (keyDown('a')) {
+		if (keyDown("a")) {
 			peepSprite.position.x -= 9
 		}
 
-		if (keyDown('d')) {
+		if (keyDown("d")) {
 			peepSprite.position.x += 9
 		}
 
@@ -331,3 +329,53 @@ function draw() {
 	if (peepStamina <= 0) {
 		gamestate = 2
 	}
+	if (gamestate === 2) {
+
+		image(endScreen, 0, 0, 500, 500);
+		camera.position.y = endScreen.position
+
+		if (keyWentDown("SPACE")) {
+			newGame();
+		}
+	}
+
+}
+
+function newGame() {
+	gamestate = 1;
+	GRAVITY = 1;
+	peepSprite.velocity.y = 0;
+	peepStamina = 10;
+	// bombs = new Group();
+	// rechargers = new Group();
+
+	peepX = width / 2
+	peepY = myheight - 50
+	peepSprite.position.x = peepX;
+	peepSprite.position.y = peepY;
+ 	peepSprite.debug=true;
+
+	while (bombs.length < 15) {
+		newEnemy = createSprite(random(10, width - 50), random(100, myheight - 50));
+		newEnemy.addImage(bomb);
+		newEnemy.setCollider("rectangle", 0, 0, 32, 32);
+		bombs.add(newEnemy);
+	}
+
+	while (rechargers.length < 15) {
+		newBoost = createSprite(random(10, width - 50), random(100, myheight - 50));
+		newBoost.addAnimation("flashing", "assets/bug1.png", "assets/bug2.png", "assets/bug3.png");
+		newBoost.setCollider("rectangle", 0, 0, 32, 32);
+		rechargers.add(newBoost);
+	}
+}
+
+function gainStamina(peep, gas) {
+	peepStamina = peepStamina + 2
+	gas.remove();
+}
+
+function loseStamina(peep, bomb) {
+	peepStamina = peepStamina - 2
+	bomb.remove();
+}
