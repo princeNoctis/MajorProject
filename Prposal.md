@@ -2,7 +2,7 @@ Proposal
 ====================
 
 I want to build a game where there is a bat where he is forest and wants to return to his cave but has
-to go throught obstacles to reach his cave.
+to go throught obstacles to reach his cave like a platformer.
 
 ### Need to Have List ###
  - Menu's 
@@ -10,12 +10,12 @@ to go throught obstacles to reach his cave.
  - Screen Bounderies
  - Player movement
  - Mapping the collisions on player 
- - Player lose speed on collsion with item
+ - Player lose speed on collsion and collide with enemies
  - energy collection by player
  - make the finixh line which is his cave
  - Last but not least make the code look clean and organized
 ### Nice to Have ###
- - Some classic arcade music
+ - Some adventurious music
  - Sound on collsion
  - Colorful Menu's and settings 
  - Creative designs for characters

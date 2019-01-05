@@ -8,11 +8,11 @@
 let gamestate;
 let titleScreen, gameScreen, endScreen;
 
-let peepImage;
-let peepSprite;
-let peepStamina = 10;
-let peepX;
-let peepY;
+let batImage;
+let batSprite;
+let batStamina = 10;
+let batX;
+let batY;
 
 let GRAVITY = 2;
 let FLAP = -15;
@@ -51,7 +51,7 @@ let jumpSound;
 let myheight = 7000;
 
 function preload() {
-	peepImage = loadImage("assets/bat2.png");
+	batImage = loadImage("assets/bat2.png");
 	grassImage = loadImage("assets/grass.png");
   bomb = loadImage("assets/repellent.png");
 	gas = loadImage("assets/bug1.png");
@@ -67,6 +67,7 @@ function preload() {
 }
 
 function setup() {
+
 	song.setVolume(0.05);
 	song.play();
 	song.loop();
@@ -79,8 +80,8 @@ function setup() {
 	rechargers = new Group();
 	bombs = new Group();
 
-	peepX = width / 2
-	peepY = myheight - 50
+	batX = width / 2
+	batY = myheight - 50
 
 	// ☁ ☁	START OF CLOUDS ☁ ☁ //
 
@@ -201,14 +202,14 @@ function setup() {
 
 
 	// SPRITES //
-	peepSprite = createSprite(peepX, peepY);
-	// peepSprite.addImage(peepImage);
-	peepSprite.position.x = peepX;
-	peepSprite.position.y = peepY;
-	//peepSprite.velocity.y = 1;
+	batSprite = createSprite(batX, batY);
+	// batSprite.addImage(batImage);
+	batSprite.position.x = batX;
+	batSprite.position.y = batY;
+	//batSprite.velocity.y = 1;
 
 	grassSprite = createSprite(width / 2, myheight);
-	// grassSprite.addImage(grassImage);
+	grassSprite.addImage(grassImage);
 
 	finishSprite = createSprite(width / 2, 16);
 	finishSprite.addImage(finishImage);
@@ -234,9 +235,9 @@ function setup() {
 
 
 	//ANIMATIONS//
-	peepSprite.addAnimation("flapping", "assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
-	peepSprite.addAnimation("flying","assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
-  // peepSprite.addImage("still","assets/bat2.png");
+	batSprite.addAnimation("flapping", "assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
+	batSprite.addAnimation("flying","assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
+  // batSprite.addImage("still","assets/bat2.png");
 }
 
 
@@ -256,14 +257,14 @@ function draw() {
 
 		background("purple");
 
-		camera.position.y = peepSprite.position.y;
+		camera.position.y = batSprite.position.y;
 
 		if (keyWentDown("w")) {
-			peepSprite.velocity.y = FLAP;
-			peepSprite.velocity.y += GRAVITY;
-			peepSprite.changeAnimation("flapping");
-			//peepSprite.animation.goToFrame(peepSprite.animation.images.length-1);
-			peepStamina = peepStamina - 1;
+			batSprite.velocity.y = FLAP;
+			batSprite.velocity.y += GRAVITY;
+			batSprite.changeAnimation("flapping");
+			//batSprite.animation.goToFrame(batSprite.animation.images.length-1);
+			batStamina = batStamina - 1;
 			counter = 0;
 			if (jumpSound.isPlaying() === false) {
 				jumpSound.play()
@@ -272,36 +273,36 @@ function draw() {
 		}
 
 		if (keyWentUp("w")) {
-			peepSprite.velocity.y = 1;
-			peepSprite.velocity.y += GRAVITY;
-			peepSprite.changeAnimation("still");
+			batSprite.velocity.y = 1;
+			batSprite.velocity.y += GRAVITY;
+			batSprite.changeAnimation("still");
 		}
 
 		if (keyDown("w")) {
 			counter++;
 			if (counter >= 35) {
-				peepStamina = peepStamina - 1;
+				batStamina = batStamina - 1;
 				counter = 0;
 			}
 		}
 
 
 		if (keyDown("a")) {
-			peepSprite.position.x -= 9
+			batSprite.position.x -= 9
 		}
 
 		if (keyDown("d")) {
-			peepSprite.position.x += 9
+			batSprite.position.x += 9
 		}
 
-		peepSprite.collide(grassSprite);
-		peepSprite.collide(LeftWallSprite);
-		peepSprite.collide(RightWallSprite);
+		batSprite.collide(grassSprite);
+		batSprite.collide(LeftWallSprite);
+		batSprite.collide(RightWallSprite);
 
-		peepSprite.overlap(bombs, loseStamina);
-		peepSprite.overlap(rechargers, gainStamina);
+		batSprite.overlap(bombs, loseStamina);
+		batSprite.overlap(rechargers, gainStamina);
 
-		if (peepSprite.collide(finishSprite)) {
+		if (batSprite.collide(finishSprite)) {
 			gamestate = 0;
 			if (keyWentDown("SPACE")) {
 				newGame();
@@ -310,23 +311,23 @@ function draw() {
 
 		textSize(15);
 		textFont("Monaco");
-		if (peepStamina <= 5) {
+		if (batStamina <= 5) {
 			fill(186, 0, 0);
 		}
-		else if (peepStamina >= 6) {
+		else if (batStamina >= 6) {
 			fill(26, 140, 55);
 		}
-		text("Stamina", width - 110, peepSprite.position.y);
+		text("Stamina", width - 110, batSprite.position.y);
 		textSize(15);
 		textFont("Monaco");
 		fill(0);
-		text(peepStamina, width - 40, peepSprite.position.y);
+		text(batStamina, width - 40, batSprite.position.y);
 
 		drawSprites();
 		drawSprites(bombs);
 	}
 
-	if (peepStamina <= 0) {
+	if (batStamina <= 0) {
 		gamestate = 2
 	}
 	if (gamestate === 2) {
@@ -344,16 +345,16 @@ function draw() {
 function newGame() {
 	gamestate = 1;
 	GRAVITY = 1;
-	peepSprite.velocity.y = 0;
-	peepStamina = 10;
+	batSprite.velocity.y = 0;
+	batStamina = 10;
 	// bombs = new Group();
 	// rechargers = new Group();
 
-	peepX = width / 2
-	peepY = myheight - 50
-	peepSprite.position.x = peepX;
-	peepSprite.position.y = peepY;
- 	peepSprite.debug=true;
+	batX = width / 2
+	batY = myheight - 50
+	batSprite.position.x = batX;
+	batSprite.position.y = batY;
+ 	batSprite.debug=true;
 
 	while (bombs.length < 15) {
 		newEnemy = createSprite(random(10, width - 50), random(100, myheight - 50));
@@ -370,12 +371,12 @@ function newGame() {
 	}
 }
 
-function gainStamina(peep, gas) {
-	peepStamina = peepStamina + 2
+function gainStamina(bat, gas) {
+	batStamina = batStamina + 2
 	gas.remove();
 }
 
-function loseStamina(peep, bomb) {
-	peepStamina = peepStamina - 2
+function loseStamina(bat, bomb) {
+	batStamina = batStamina - 2
 	bomb.remove();
 }
