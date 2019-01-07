@@ -41,9 +41,7 @@ let newEnemy;
 let newBoost;
 let bomb;
 let gas;
-let cloud1;
-let cloud2;
-let cloud3;
+let cloud;
 let song;
 
 let jumpSound;
@@ -51,31 +49,29 @@ let jumpSound;
 let myheight = 7000;
 
 function preload() {
-	batImage = loadImage("assets/bat2.png");
-	grassImage = loadImage("assets/grass.png");
+  batImage = loadImage("assets/bat2.png");
+  grassImage = loadImage("assets/grass.png");
   bomb = loadImage("assets/repellent.png");
-	gas = loadImage("assets/bug1.png");
-	jumpSound = loadSound("assets/Bat Squeak.mp3");
-	song = loadSound("assets/song.mp3");
-	finishImage = loadImage("assets/cave.png");
-	titleScreen = loadImage("assets/startscreen.png");
-	endScreen = loadImage("assets/endscreen.png");
-	cloud1 = loadImage("assets/cloud.png");
-	cloud2 = loadImage("assets/cloud.png");
-	cloud3 = loadImage("assets/cloud.png");
+  gas = loadImage("assets/bug1.png");
+  jumpSound = loadSound("assets/Bat Squeak.mp3");
+  song = loadSound("assets/song.mp3");
+  finishImage = loadImage("assets/cave.png");
+  titleScreen = loadImage("assets/startscreen.png");
+  endScreen = loadImage("assets/endscreen.png");
+  cloud = loadImage("assets/cloud.png");
 
 }
 
 function setup() {
 
-	song.setVolume(0.05);
-	song.play();
-	song.loop();
+  song.setVolume(0.05);
+  song.play();
+  song.loop();
 
-	createCanvas(800, 600);
-	background(205, 232, 239);
+  createCanvas(800, 600);
+  background(205, 232, 239);
 
-	gamestate = 0;
+  gamestate = 0;
 
 	rechargers = new Group();
 	bombs = new Group();
@@ -249,11 +245,12 @@ function draw() {
 		image(titleScreen, 0, 0, 800, 600);
 		camera.position.y = titleScreen.position
 
-		if (keyWentDown("SPACE")) {
+		if (keyWentDown(" ")) {
 			newGame();
 		}
 
-	} else if (gamestate === 1) {
+  }
+	else if (gamestate === 1) {
 
 		background("purple");
 
@@ -339,44 +336,43 @@ function draw() {
 			newGame();
 		}
 	}
-
 }
 
 function newGame() {
-	gamestate = 1;
-	GRAVITY = 1;
-	batSprite.velocity.y = 0;
-	batStamina = 10;
-	// bombs = new Group();
-	// rechargers = new Group();
+  gamestate = 1;
+  GRAVITY = 1;
+  batSprite.velocity.y = 0;
+  batStamina = 10;
+  // bombs = new Group();
+  // rechargers = new Group();
 
-	batX = width / 2
-	batY = myheight - 50
-	batSprite.position.x = batX;
-	batSprite.position.y = batY;
- 	batSprite.debug=true;
+  batX = width / 2;
+  batY = myheight - 50;
+  batSprite.position.x = batX;
+  batSprite.position.y = batY;
+  batSprite.debug=true;
 
-	while (bombs.length < 15) {
-		newEnemy = createSprite(random(10, width - 50), random(100, myheight - 50));
-		newEnemy.addImage(bomb);
-		newEnemy.setCollider("rectangle", 0, 0, 32, 32);
-		bombs.add(newEnemy);
-	}
+  while (bombs.length < 15) {
+    newEnemy = createSprite(random(10, width - 50), random(100, myheight - 50));
+    newEnemy.addImage(bomb);
+    newEnemy.setCollider("rectangle", 0, 0, 32, 32);
+    bombs.add(newEnemy);
+  }
 
-	while (rechargers.length < 15) {
-		newBoost = createSprite(random(10, width - 50), random(100, myheight - 50));
-		newBoost.addAnimation("flashing", "assets/bug1.png", "assets/bug2.png", "assets/bug3.png");
-		newBoost.setCollider("rectangle", 0, 0, 32, 32);
-		rechargers.add(newBoost);
-	}
+  while (rechargers.length < 15) {
+    newBoost = createSprite(random(10, width - 50), random(100, myheight - 50));
+    newBoost.addAnimation("flashing", "assets/bug1.png", "assets/bug2.png", "assets/bug3.png");
+    newBoost.setCollider("rectangle", 0, 0, 32, 32);
+    rechargers.add(newBoost);
+  }
 }
 
 function gainStamina(bat, gas) {
-	batStamina = batStamina + 2
-	gas.remove();
+  batStamina = batStamina + 2;
+  gas.remove();
 }
 
 function loseStamina(bat, bomb) {
-	batStamina = batStamina - 2
-	bomb.remove();
+  batStamina = batStamina - 2;
+  bomb.remove();
 }
