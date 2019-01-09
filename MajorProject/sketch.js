@@ -4,6 +4,8 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
+// Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
+// ball being spit towardst the player
 
 let backgroundMusic;
 let background;
@@ -15,7 +17,7 @@ let linkFacing;
 let velocityY;
 let gravity;
 let velocityX;
-let dashTimer;
+let sprintTimer;
 let dashCooldown;
 let smashRight;
 let smashLeft;
@@ -89,7 +91,7 @@ function setup() {
 	velocityY = 0;
 	gravity = 1;
 	velocityX = 0;
-	dashTimer = 0;
+	sprintTimer = 0;
 	dashCooldown = 0;
 	smashTimer = 0;
   smashCooldown = 0;
@@ -106,7 +108,7 @@ function setup() {
 	enemySide = "right";
 	enemyBallX = 0;
 	enemyBallY = 0;
-	enemyBallVelocityX = 0;
+enemyBallVelocityX = 0;
 	enemyBallVelocityY = 0;
 
 	linkHit = 0;
@@ -120,3 +122,37 @@ function setup() {
 	smash = 0;
   difficulty = 0;
 }
+
+
+function draw() {
+	image(background, 0, 0, 1280, 640);
+
+	if (linkHP < 1) {
+		phase = -2
+	}
+
+	if (linkHit == 1) {
+		if (linkIFrames == 0) {
+			linkHP--
+			linkIFrames = 60
+		} else if (linkIFrames > 1) {
+			linkIFrames--
+		} else {
+			linkHit = 0
+			linkIFrames--
+		}
+	}
+
+	if (sprintTimer == 0) {
+
+		gravity = 1
+
+								if (keyIsDown(65)) {
+									if (keyIsDown(68)) {
+										velocityX = 0
+									} else {
+										linkFacing = "left"
+										velocityX = -8
+									}
+								} else if (keyIsDown(68)) {
+									linkFacing = "right"
