@@ -1,18 +1,20 @@
 Proposal
 ====================
 
-I want to build a game where there is a bat where he is forest and wants to return to his cave but has
-to go throught obstacles to reach his cave like a platformer.
+I want to build a game where there is a PLAYER has to defeat this slime boss 
+sorta like a rpg 2d platformer
 
 ### Need to Have List ###
+ - basic tutorial
  - Menu's 
  - Design map
  - Screen Bounderies
  - Player movement
  - Mapping the collisions on player 
- - Player lose speed on collsion and collide with enemies
- - energy collection by player
- - make the finixh line which is his cave
+ - Player lose health on collsion and collide with enemies
+ - health collection by player
+ - make the finixh screen 
+ - make the death screen
  - Last but not least make the code look clean and organized
 ### Nice to Have ###
  - Some adventurious music
@@ -20,4 +22,5 @@ to go throught obstacles to reach his cave like a platformer.
  - Colorful Menu's and settings 
  - Creative designs for characters
  - use some creative images for items 
- - 
+ - add some effects 
+ - add sprite animations
