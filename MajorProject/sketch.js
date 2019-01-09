@@ -5,374 +5,118 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let gamestate;
-let titleScreen, gameScreen, endScreen;
+let backgroundMusic;
+let background;
+let linkRight;
+let linkLeft;
+let linkX;
+let linkY;
+let linkFacing;
+let velocityY;
+let gravity;
+let velocityX;
+let dashTimer;
+let dashCooldown;
+let smashRight;
+let smashLeft;
+let smashTimer;
+let smashCooldown;
+let slimeBoss;
+let slimeBossCharge;
+let slimeBossTell;
+let slimeBossSpit;
+let slimeBossBall;
+let slimeBossSpikes;
+let slimeBossRed;
+let linkRed;
+let state;
+let tutorialstate;
+let tutorialTimer;
+let enemystate;
+let enemyTimer;
+let enemyX;
+let enemyY;
+let enemyState;
+let enemyVelocityY;
+let enemySide;
+let enemyBallX;
+let enemyBallY;
+let enemyBallVelocityX;
+let enemyBallVelocityY;
+let linkHit;
+let linkIFrames;
+let linkHP;
+let enemyHit;
+let enemyIFrames;
+let enemyHP;
+let smash;
+let gameOver;
+let victory;
+let balloon;
+let heart;
+let difficulty;
+let guardianLeft;
+let guardianRight;
+let spearLeft;
+let spearRight;
+let spearThrowLeft;
+let spearThrowRight;
 
-let batImage;
-let batSprite;
-let batStamina = 10;
-let batX;
-let batY;
-
-let GRAVITY = 2;
-let FLAP = -15;
-let counter = 0;
-
-let grassImage;
-let grassSprite;
-let LeftWallSprite;
-let RightWallSprite;
-let finishImage;
-let finishSprite;
-
-let cloudSprite1;
-let cloudSprite2;
-let cloudSprite3;
-
-let bombSprite;
-let bombImage;
-
-let rechargers;
-let bombs;
-
-let clouds;
-
-let newEnemy;
-let newBoost;
-let bomb;
-let gas;
-let cloud;
-let song;
-
-let jumpSound;
-
-let myheight = 7000;
-
-function preload() {
-  batImage = loadImage("assets/bat2.png");
-  grassImage = loadImage("assets/grass.png");
-  bomb = loadImage("assets/repellent.png");
-  gas = loadImage("assets/bug1.png");
-  jumpSound = loadSound("assets/Bat Squeak.mp3");
-  song = loadSound("assets/song.mp3");
-  finishImage = loadImage("assets/cave.png");
-  titleScreen = loadImage("assets/startscreen.png");
-  endScreen = loadImage("assets/endscreen.png");
-  cloud = loadImage("assets/cloud.png");
-
-}
 
 function setup() {
-
-  song.setVolume(0.05);
-  song.play();
-  song.loop();
-
-  createCanvas(800, 600);
-  background(205, 232, 239);
-
-  gamestate = 0;
-
-	rechargers = new Group();
-	bombs = new Group();
-
-	batX = width / 2
-	batY = myheight - 50
-
-	// ☁ ☁	START OF CLOUDS ☁ ☁ //
-
-	cloudSprite1 = createSprite(100, myheight - 100);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(550, myheight - 600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 1000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(550, myheight - 1300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(400, myheight - 1600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(100, myheight - 1800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 2000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 2300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(730, myheight - 2600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 2800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 3000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 3300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(730, myheight - 3600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 3800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 4000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 4300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(730, myheight - 4600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 4800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 5000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 5300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(730, myheight - 5600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 5800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite1 = createSprite(100, myheight - 6000);
-	cloudSprite1.addImage(cloud1);
-	cloudSprite1.scale = 2;
-
-	cloudSprite2 = createSprite(400, myheight - 6300);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	cloudSprite3 = createSprite(730, myheight - 6600);
-	cloudSprite3.addImage(cloud3);
-	cloudSprite3.scale = 2;
-
-	cloudSprite2 = createSprite(420, myheight - 6800);
-	cloudSprite2.addImage(cloud2);
-	cloudSprite2.scale = 2;
-
-	// ☁ ☁	END OF CLOUDS ☁ ☁ //
-
-
-
-	// SPRITES //
-	batSprite = createSprite(batX, batY);
-	// batSprite.addImage(batImage);
-	batSprite.position.x = batX;
-	batSprite.position.y = batY;
-	//batSprite.velocity.y = 1;
-
-	grassSprite = createSprite(width / 2, myheight);
-	grassSprite.addImage(grassImage);
-
-	finishSprite = createSprite(width / 2, 16);
-	finishSprite.addImage(finishImage);
-
-	LeftWallSprite = createSprite(1, 0, 2, myheight * 2);
-	LeftWallSprite.shapeColor = color(0);
-	RightWallSprite = createSprite(width - 1, 0, 2, myheight * 2);
-	RightWallSprite.shapeColor = color(0);
-
-	while (bombs.length < 15) {
-		newEnemy = createSprite(random(10, width - 50), myheight - 100);
-		newEnemy.setCollider("rectangle", 0, 0, 32, 32);
-		newEnemy.addImage(bomb);
-		bombs.add(newEnemy);
-	}
-
-	while (rechargers.length < 15) {
-		newBoost = createSprite(random(10, width - 50), myheight - 150);
-		newBoost.setCollider("rectangle", 0, 0, 32, 32);
-		newBoost.addAnimation("flashing", "assets/bug1.png", "assets/bug2.png", "assets/bug3.png");
-		rechargers.add(newBoost);
-	}
-
-
-	//ANIMATIONS//
-	batSprite.addAnimation("flapping", "assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
-	batSprite.addAnimation("flying","assets/bat1.png", "assets/bat2.png","assets/bat3.png","assets/bat4.png","assets/bat5.png","assets/bat6.png","assets/bat7.png");
-  // batSprite.addImage("still","assets/bat2.png");
-}
-
-
-function draw() {
-
-
-	if (gamestate === 0) {
-
-		image(titleScreen, 0, 0, 800, 600);
-		camera.position.y = titleScreen.position
-
-		if (keyWentDown(" ")) {
-			newGame();
-		}
-
-  }
-	else if (gamestate === 1) {
-
-		background("purple");
-
-		camera.position.y = batSprite.position.y;
-
-		if (keyWentDown("w")) {
-			batSprite.velocity.y = FLAP;
-			batSprite.velocity.y += GRAVITY;
-			batSprite.changeAnimation("flapping");
-			//batSprite.animation.goToFrame(batSprite.animation.images.length-1);
-			batStamina = batStamina - 1;
-			counter = 0;
-			if (jumpSound.isPlaying() === false) {
-				jumpSound.play()
-				jumpSound.setVolume(0.5);
-			}
-		}
-
-		if (keyWentUp("w")) {
-			batSprite.velocity.y = 1;
-			batSprite.velocity.y += GRAVITY;
-			batSprite.changeAnimation("still");
-		}
-
-		if (keyDown("w")) {
-			counter++;
-			if (counter >= 35) {
-				batStamina = batStamina - 1;
-				counter = 0;
-			}
-		}
-
-
-		if (keyDown("a")) {
-			batSprite.position.x -= 9
-		}
-
-		if (keyDown("d")) {
-			batSprite.position.x += 9
-		}
-
-		batSprite.collide(grassSprite);
-		batSprite.collide(LeftWallSprite);
-		batSprite.collide(RightWallSprite);
-
-		batSprite.overlap(bombs, loseStamina);
-		batSprite.overlap(rechargers, gainStamina);
-
-		if (batSprite.collide(finishSprite)) {
-			gamestate = 0;
-			if (keyWentDown("SPACE")) {
-				newGame();
-			}
-		}
-
-		textSize(15);
-		textFont("Monaco");
-		if (batStamina <= 5) {
-			fill(186, 0, 0);
-		}
-		else if (batStamina >= 6) {
-			fill(26, 140, 55);
-		}
-		text("Stamina", width - 110, batSprite.position.y);
-		textSize(15);
-		textFont("Monaco");
-		fill(0);
-		text(batStamina, width - 40, batSprite.position.y);
-
-		drawSprites();
-		drawSprites(bombs);
-	}
-
-	if (batStamina <= 0) {
-		gamestate = 2
-	}
-	if (gamestate === 2) {
-
-		image(endScreen, 0, 0, 500, 500);
-		camera.position.y = endScreen.position
-
-		if (keyWentDown("SPACE")) {
-			newGame();
-		}
-	}
-}
-
-function newGame() {
-  gamestate = 1;
-  GRAVITY = 1;
-  batSprite.velocity.y = 0;
-  batStamina = 10;
-  // bombs = new Group();
-  // rechargers = new Group();
-
-  batX = width / 2;
-  batY = myheight - 50;
-  batSprite.position.x = batX;
-  batSprite.position.y = batY;
-  batSprite.debug=true;
-
-  while (bombs.length < 15) {
-    newEnemy = createSprite(random(10, width - 50), random(100, myheight - 50));
-    newEnemy.addImage(bomb);
-    newEnemy.setCollider("rectangle", 0, 0, 32, 32);
-    bombs.add(newEnemy);
-  }
-
-  while (rechargers.length < 15) {
-    newBoost = createSprite(random(10, width - 50), random(100, myheight - 50));
-    newBoost.addAnimation("flashing", "assets/bug1.png", "assets/bug2.png", "assets/bug3.png");
-    newBoost.setCollider("rectangle", 0, 0, 32, 32);
-    rechargers.add(newBoost);
-  }
-}
-
-function gainStamina(bat, gas) {
-  batStamina = batStamina + 2;
-  gas.remove();
-}
-
-function loseStamina(bat, bomb) {
-  batStamina = batStamina - 2;
-  bomb.remove();
+	createCanvas(1280, 640);
+	frameRate(60);
+	linkRight = loadImage("linkRight.png");
+	linkLeft = loadImage("linkLeft.png");
+	background = loadImage("background.png");
+	smashRight = loadImage("smashRight.png");
+	smashLeft = loadImage("smashLeft.png");
+	slimeBoss = loadImage("slimeBoss.png");
+	slimeBossCharge = loadImage("slimeBossCharge.png");
+	slimeBossTell = loadImage("slimeBossTell.png");
+	slimeBossSpit = loadImage("slimeBossSpit.png");
+	slimeBossBall = loadImage("slimeBossBall.png");
+	slimeBossSpikes = loadImage("slimeBossSpikes.png");
+	slimeBossRed = loadImage("slimeBossRed.png");
+	linkRed = loadImage("linkRed.png");
+	gameOver = loadImage("gameOver.png");
+	victory = loadImage("victory.png");
+	balloon = loadImage("balloon.png");
+	heart = loadImage("heart.png");
+	linkX = 150;
+	linkY = 300;
+	linkFacing = "right";
+	velocityY = 0;
+	gravity = 1;
+	velocityX = 0;
+	dashTimer = 0;
+	dashCooldown = 0;
+	smashTimer = 0;
+  smashCooldown = 0;
+	state = 0;
+	tutorialstate = 0;
+	tutorialTimer = 0;
+	enemystate = 0;
+
+	enemyTimer = 0;
+	enemyX = 700;
+	enemyY = -250;
+	enemyState = "slimeBoss";
+	enemyVelocityY = 0;
+	enemySide = "right";
+	enemyBallX = 0;
+	enemyBallY = 0;
+	enemyBallVelocityX = 0;
+	enemyBallVelocityY = 0;
+
+	linkHit = 0;
+	linkIFrames = 0;
+  linkHP = 3;
+
+	enemyHit = 0;
+	enemyIFrames = 0;
+	enemyHP = 10;
+
+	smash = 0;
+  difficulty = 0;
 }
