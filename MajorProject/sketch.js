@@ -80,11 +80,15 @@ let spearThrowRight;
 function setup() {
   createCanvas(1280, 640);
   frameRate(60);
+
   linkRight = loadImage("linkRight.png");
   linkLeft = loadImage("linkLeft.png");
+
   background = loadImage("background.png");
+
   smashRight = loadImage("smashRight.png");
   smashLeft = loadImage("smashLeft.png");
+
   slimeBoss = loadImage("slimeBoss.png");
   slimeBossCharge = loadImage("slimeBossCharge.png");
   slimeBossTell = loadImage("slimeBossTell.png");
@@ -92,24 +96,34 @@ function setup() {
   slimeBossBall = loadImage("slimeBossBall.png");
   slimeBossSpikes = loadImage("slimeBossSpikes.png");
   slimeBossRed = loadImage("slimeBossRed.png");
+
   linkRed = loadImage("linkRed.png");
+
   gameOver = loadImage("gameOver.png");
   victory = loadImage("victory.png");
+
   balloon = loadImage("balloon.png");
   heart = loadImage("heart.png");
+
   linkX = 150;
   linkY = 300;
   linkFacing = "right";
+
   velocityY = 0;
   gravity = 1;
   velocityX = 0;
+
   sprintTimer = 0;
   sprintCooldown = 0;
+
   smashTimer = 0;
   smashCooldown = 0;
+  smash = 0;
+
   state = 0;
   tutorialstate = 0;
   tutorialTimer = 0;
+
   enemystate = 0;
   enemyTimer = 0;
   enemyX = 700;
@@ -130,7 +144,6 @@ function setup() {
   enemyIFrames = 0;
   enemyHP = 10;
 
-  smash = 0;
   difficulty = 0;
 }
 
