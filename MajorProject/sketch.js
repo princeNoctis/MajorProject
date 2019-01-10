@@ -17,7 +17,7 @@ let linkY;
 let linkFacing;
 let linkRed;
 let linkHit;
-let linkIFrames;
+let linkHitRed;
 let linkHP;
 
 let velocityY;
@@ -78,35 +78,37 @@ let spearThrowRight;
 
 
 function preload(){
-  linkRight = loadImage("linkRight.png");
-  linkLeft = loadImage("linkLeft.png");
+  linkRight = loadImage("assets/linkRight.png");
+  linkLeft = loadImage("assets/linkLeft.png");
+  //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
 
-  background = loadImage("background.png");
 
-  smashRight = loadImage("smashRight.png");
-  smashLeft = loadImage("smashLeft.png");
-
-  slimeBoss = loadImage("slimeBoss.png");
-  slimeBossCharge = loadImage("slimeBossCharge.png");
-  slimeBossTell = loadImage("slimeBossTell.png");
-  slimeBossSpit = loadImage("slimeBossSpit.png");
-  slimeBossBall = loadImage("slimeBossBall.png");
-  slimeBossSpikes = loadImage("slimeBossSpikes.png");
-  slimeBossRed = loadImage("slimeBossRed.png");
-
-  linkRed = loadImage("linkRed.png");
-
-  gameOver = loadImage("gameOver.png");
-  victory = loadImage("victory.png");
-
-  balloon = loadImage("balloon.png");
-  heart = loadImage("heart.png");
+  background = loadImage("assets/background.png");
+  //
+  smashRight = loadImage("assets/smashRight.png");
+  smashLeft = loadImage("assets/smashLeft.png");
+  //
+  // slimeBoss = loadImage("slimeBoss.png");
+  // slimeBossCharge = loadImage("slimeBossCharge.png");
+  // slimeBossTell = loadImage("slimeBossTell.png");
+  // slimeBossSpit = loadImage("slimeBossSpit.png");
+  // slimeBossBall = loadImage("slimeBossBall.png");
+  // slimeBossSpikes = loadImage("slimeBossSpikes.png");
+  // slimeBossRed = loadImage("slimeBossRed.png");
+  //
+  // linkRed = loadImage("linkRed.png");
+  //
+  // gameOver = loadImage("gameOver.png");
+  // victory = loadImage("victory.png");
+  //
+  // balloon = loadImage("balloon.png");
+  heart = loadImage("assets/heart.png");
 }
 
 function setup() {
   createCanvas(1280, 640);
   frameRate(60);
-  
+
   linkX = 150;
   linkY = 300;
   linkFacing = "right";
@@ -139,7 +141,7 @@ function setup() {
   enemyBallVelocityY = 0;
 
   linkHit = 0;
-  linkIFrames = 0;
+  linkHitRed = 0;
   linkHP = 3;
 
   enemyHit = 0;
@@ -152,22 +154,21 @@ function setup() {
 
 function draw() {
   image(background, 0, 0, 1280, 640);
-
   if (linkHP < 1) {
     state = -2;
   }
 
   if (linkHit === 1) {
-    if (linkIFrames === 0) {
+    if (linkHitRed === 0) {
       linkHP--;
-      linkIFrames = 60;
+      linkHitRed = 60;
     }
-    else if (linkIFrames > 1) {
-      linkIFrames--;
+    else if (linkHitRed > 1) {
+      linkHitRed--;
     }
     else {
       linkHit = 0;
-      linkIFrames--;
+      linkHitRed--;
     }
   }
 
@@ -253,16 +254,16 @@ function draw() {
   }
   velocityY = velocityY + gravity;
 
-  if (linkHit === 0 || linkIFrames % 10 < 5) {
+  if (linkHit === 0 || linkHitRed % 10 < 5) {
     if (linkFacing === "right") {
-      image(linkRight, linkX, linkY, 80, 160);
+      image(linkRight, linkX, linkY, 100, 160);
     }
     else {
-      image(linkLeft, linkX, linkY, 80, 160);
+      image(linkLeft, linkX, linkY, 100, 160);
     }
   }
   else {
-    image(linkRed, linkX, linkY, 80, 160);
+    image(linkRed, linkX, linkY, 100, 160);
   }
 
   if (state === -2) {
