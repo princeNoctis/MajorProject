@@ -9,20 +9,30 @@
 
 let backgroundMusic;
 let background;
+
 let linkRight;
 let linkLeft;
 let linkX;
 let linkY;
 let linkFacing;
+let linkRed;
+let linkHit;
+let linkIFrames;
+let linkHP;
+
 let velocityY;
 let gravity;
 let velocityX;
+
 let sprintTimer;
 let dashCooldown;
+
 let smashRight;
 let smashLeft;
 let smashTimer;
 let smashCooldown;
+let smash;
+
 let slimeBoss;
 let slimeBossCharge;
 let slimeBossTell;
@@ -30,10 +40,12 @@ let slimeBossSpit;
 let slimeBossBall;
 let slimeBossSpikes;
 let slimeBossRed;
-let linkRed;
+
 let state;
+
 let tutorialstate;
 let tutorialTimer;
+
 let enemystate;
 let enemyTimer;
 let enemyX;
@@ -45,20 +57,20 @@ let enemyBallX;
 let enemyBallY;
 let enemyBallVelocityX;
 let enemyBallVelocityY;
-let linkHit;
-let linkIFrames;
-let linkHP;
 let enemyHit;
 let enemyIFrames;
 let enemyHP;
-let smash;
+
 let gameOver;
 let victory;
+
 let balloon;
 let heart;
+
 let difficulty;
-let guardianLeft;
-let guardianRight;
+
+let ganondorfLeft;
+let ganondorfRight;
 let spearLeft;
 let spearRight;
 let spearThrowLeft;
@@ -173,7 +185,7 @@ function draw() {
 				velocityX = -32
 			}
 
-			
+
 function drawTutorial(){
 
 }
@@ -191,6 +203,7 @@ function drawHealth() {
 
 }
 
-function drawGuardian() {
+
+function drawganondorf() {
 
 }
