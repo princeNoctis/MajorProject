@@ -108,7 +108,7 @@ function setup() {
 	enemySide = "right";
 	enemyBallX = 0;
 	enemyBallY = 0;
-enemyBallVelocityX = 0;
+	enemyBallVelocityX = 0;
 	enemyBallVelocityY = 0;
 
 	linkHit = 0;
@@ -128,7 +128,7 @@ function draw() {
 	image(background, 0, 0, 1280, 640);
 
 	if (linkHP < 1) {
-		phase = -2
+		state = -2
 	}
 
 	if (linkHit == 1) {
@@ -144,15 +144,53 @@ function draw() {
 	}
 
 	if (sprintTimer == 0) {
-
 		gravity = 1
+		if (keyIsDown(65)) {
+								if (keyIsDown(68)) {
+									velocityX = 0
+								} else {
+									guyFacing = "left"
+									velocityX = -8
+								}
+							} else if (keyIsDown(68)) {
+								guyFacing = "right"
+								velocityX = 8
+							} else {
+								velocityX = 0
+							}
 
-								if (keyIsDown(65)) {
-									if (keyIsDown(68)) {
-										velocityX = 0
-									} else {
-										linkFacing = "left"
-										velocityX = -8
-									}
-								} else if (keyIsDown(68)) {
-									linkFacing = "right"
+	if (keyIsDown(32) && guyY == 400) {
+		velocityY =  -24
+	}
+		if (keyIsDown(16) && dashCooldown == 0 && slashTimer == 0) {
+			dashTimer = 9
+			dashCooldown = 30
+			velocityY = 0
+			gravity = 0
+			if (guyFacing == "right") {
+				velocityX = 32
+			} else {
+				velocityX = -32
+			}
+
+			
+function drawTutorial(){
+
+}
+
+
+function drawSlime() {
+
+}
+
+function drawGameOver() {
+
+}
+
+function drawHealth() {
+
+}
+
+function drawGuardian() {
+
+}
