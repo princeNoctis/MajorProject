@@ -77,10 +77,7 @@ let spearThrowLeft;
 let spearThrowRight;
 
 
-function setup() {
-  createCanvas(1280, 640);
-  frameRate(60);
-
+function preload(){
   linkRight = loadImage("linkRight.png");
   linkLeft = loadImage("linkLeft.png");
 
@@ -104,7 +101,12 @@ function setup() {
 
   balloon = loadImage("balloon.png");
   heart = loadImage("heart.png");
+}
 
+function setup() {
+  createCanvas(1280, 640);
+  frameRate(60);
+  
   linkX = 150;
   linkY = 300;
   linkFacing = "right";
