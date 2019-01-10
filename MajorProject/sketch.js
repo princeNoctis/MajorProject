@@ -140,49 +140,52 @@ function draw() {
 	image(background, 0, 0, 1280, 640);
 
 	if (linkHP < 1) {
-		state = -2
+		state = -2;
 	}
 
 	if (linkHit == 1) {
 		if (linkIFrames == 0) {
-			linkHP--
-			linkIFrames = 60
-		} else if (linkIFrames > 1) {
-			linkIFrames--
-		} else {
-			linkHit = 0
-			linkIFrames--
+			linkHP--;
+			linkIFrames = 60;
+		}
+		else if (linkIFrames > 1) {
+			linkIFrames--;
+		}
+		else {
+			linkHit = 0;
+			linkIFrames--;
 		}
 	}
 
 	if (sprintTimer == 0) {
-		gravity = 1
+		gravity = 1;
 		if (keyIsDown(65)) {
 								if (keyIsDown(68)) {
-									velocityX = 0
+									velocityX = 0;
 								} else {
 									guyFacing = "left"
-									velocityX = -8
+									velocityX = -8;
 								}
 							} else if (keyIsDown(68)) {
-								guyFacing = "right"
-								velocityX = 8
+								guyFacing = "right";
+								velocityX = 8;
 							} else {
-								velocityX = 0
+								velocityX = 0;
 							}
 
 	if (keyIsDown(32) && guyY == 400) {
-		velocityY =  -24
+		velocityY =  -24;
 	}
 		if (keyIsDown(16) && dashCooldown == 0 && slashTimer == 0) {
-			dashTimer = 9
-			dashCooldown = 30
-			velocityY = 0
-			gravity = 0
+			dashTimer = 9;
+			dashCooldown = 30;
+			velocityY = 0;
+			gravity = 0;
 			if (guyFacing == "right") {
-				velocityX = 32
-			} else {
-				velocityX = -32
+				velocityX = 32;
+			}
+			else {
+				velocityX = -32;
 			}
 
 
