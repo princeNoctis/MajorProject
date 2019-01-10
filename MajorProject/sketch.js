@@ -174,8 +174,8 @@ function draw() {
 
   if (sprintTimer === 0) {
     gravity = 1;
-    if (keyIsDown(65)) {
-      if (keyIsDown(68)) {
+    if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
+      if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
         velocityX = 0;
       }
       else {
@@ -183,7 +183,7 @@ function draw() {
         velocityX = -8;
       }
     }
-    else if (keyIsDown(68)) {
+    else if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
       linkFacing = "right";
       velocityX = 8;
     }
@@ -268,6 +268,9 @@ function draw() {
 
   if (state === -2) {
     drawGameOver();
+  }
+  if (state === -3) {
+    Menu();
   }
   if (state === -1) {
     drawVictory();
