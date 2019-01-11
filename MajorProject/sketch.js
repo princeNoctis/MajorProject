@@ -96,7 +96,7 @@ function preload(){
   // slimeBossSpikes = loadImage("slimeBossSpikes.png");
   // slimeBossRed = loadImage("slimeBossRed.png");
   //
-  // linkRed = loadImage("linkRed.png");
+  linkRed = loadImage("assets/linkRed.png");
   //
   // gameOver = loadImage("gameOver.png");
   // victory = loadImage("victory.png");
