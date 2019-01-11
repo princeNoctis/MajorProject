@@ -64,7 +64,7 @@ let enemyHP;
 let gameOver;
 let victory;
 
-let balloon;
+let enemyHealths;
 let heart;
 
 let difficulty;
@@ -101,7 +101,7 @@ function preload(){
   // gameOver = loadImage("gameOver.png");
   // victory = loadImage("victory.png");
   //
-  // balloon = loadImage("balloon.png");
+  // enemyHealths = loadImage("enemyHealths.png");
   heart = loadImage("assets/heart.png");
 }
 
@@ -351,8 +351,50 @@ function drawSlime() {
 function drawGameOver() {
 
 }
-
 function drawHealth() {
+  if (linkHP > 0) {
+    image(heart, 35, 20, 40, 40);
+  }
+  if (linkHP > 1) {
+    image(heart, 70, 20, 40, 40);
+  }
+  if (linkHP > 2) {
+    image(heart, 105, 20, 40, 40);
+  }
+  // if (enemyHP > 0) {
+  //   image(enemyHealths, 1220, 20, 40, 40);
+  // }
+  // if (enemyHP > 1) {
+  //   image(enemyHealths, 1160, 20, 40, 40);
+  // }
+  // if (enemyHP > 2) {
+  //   image(enemyHealths, 1100, 20, 40, 40);
+  // }
+  // if (enemyHP > 3) {
+  //   image(enemyHealths, 1040, 20, 40, 40);
+  // }
+  // if (enemyHP > 4) {
+  //   image(enemyHealths, 980, 20, 40, 40);
+  // }
+  // if (enemyHP > 5) {
+  //   image(enemyHealths, 920, 20, 40, 40);
+  // }
+  // if (enemyHP > 6) {
+  //   image(enemyHealths, 860, 20, 40, 40);
+  // }
+  // if (enemyHP > 7) {
+  //   image(enemyHealths, 800, 20, 40, 40);
+  // }
+  // if (enemyHP > 8) {
+  //   image(enemyHealths, 740, 20, 40, 40);
+  // }
+  // if (enemyHP > 9) {
+  //   image(enemyHealths, 680, 20, 40, 40);
+  // }
+}
+
+
+function menu(){
 
 }
 
