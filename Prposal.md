@@ -8,11 +8,10 @@ sorta like a rpg 2d platformer
  - basic tutorial
  - Menu's 
  - Design map
- - Screen Bounderies
- - Player movement
- - Mapping the collisions on player 
+ - Screen Bounderies X
+ - Player movement X
+ - Mapping the collisions on player X
  - Player lose health on collsion and collide with enemies
- - health collection by player
  - make the finixh screen 
  - make the death screen
  - Last but not least make the code look clean and organized

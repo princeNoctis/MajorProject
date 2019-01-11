@@ -17,7 +17,7 @@ let linkY;
 let linkFacing;
 let linkRed;
 let linkHit;
-let linkIFrames;
+let linkHitRed;
 let linkHP;
 
 let velocityY;
@@ -77,39 +77,57 @@ let spearThrowLeft;
 let spearThrowRight;
 
 
+function preload(){
+  linkRight = loadImage("assets/linkRight.png");
+  linkLeft = loadImage("assets/linkLeft.png");
+  //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
+
+
+  background = loadImage("assets/background.png");
+  //
+  smashRight = loadImage("assets/smashRight.png");
+  smashLeft = loadImage("assets/smashLeft.png");
+  //
+  // slimeBoss = loadImage("slimeBoss.png");
+  // slimeBossCharge = loadImage("slimeBossCharge.png");
+  // slimeBossTell = loadImage("slimeBossTell.png");
+  // slimeBossSpit = loadImage("slimeBossSpit.png");
+  // slimeBossBall = loadImage("slimeBossBall.png");
+  // slimeBossSpikes = loadImage("slimeBossSpikes.png");
+  // slimeBossRed = loadImage("slimeBossRed.png");
+  //
+  // linkRed = loadImage("linkRed.png");
+  //
+  // gameOver = loadImage("gameOver.png");
+  // victory = loadImage("victory.png");
+  //
+  // balloon = loadImage("balloon.png");
+  heart = loadImage("assets/heart.png");
+}
+
 function setup() {
   createCanvas(1280, 640);
   frameRate(60);
-  linkRight = loadImage("linkRight.png");
-  linkLeft = loadImage("linkLeft.png");
-  background = loadImage("background.png");
-  smashRight = loadImage("smashRight.png");
-  smashLeft = loadImage("smashLeft.png");
-  slimeBoss = loadImage("slimeBoss.png");
-  slimeBossCharge = loadImage("slimeBossCharge.png");
-  slimeBossTell = loadImage("slimeBossTell.png");
-  slimeBossSpit = loadImage("slimeBossSpit.png");
-  slimeBossBall = loadImage("slimeBossBall.png");
-  slimeBossSpikes = loadImage("slimeBossSpikes.png");
-  slimeBossRed = loadImage("slimeBossRed.png");
-  linkRed = loadImage("linkRed.png");
-  gameOver = loadImage("gameOver.png");
-  victory = loadImage("victory.png");
-  balloon = loadImage("balloon.png");
-  heart = loadImage("heart.png");
+
   linkX = 150;
   linkY = 300;
   linkFacing = "right";
+
   velocityY = 0;
   gravity = 1;
   velocityX = 0;
+
   sprintTimer = 0;
   sprintCooldown = 0;
+
   smashTimer = 0;
   smashCooldown = 0;
+  smash = 0;
+
   state = 0;
   tutorialstate = 0;
   tutorialTimer = 0;
+
   enemystate = 0;
   enemyTimer = 0;
   enemyX = 700;
@@ -123,43 +141,41 @@ function setup() {
   enemyBallVelocityY = 0;
 
   linkHit = 0;
-  linkIFrames = 0;
+  linkHitRed = 0;
   linkHP = 3;
 
   enemyHit = 0;
   enemyIFrames = 0;
   enemyHP = 10;
 
-  smash = 0;
   difficulty = 0;
 }
 
 
 function draw() {
   image(background, 0, 0, 1280, 640);
-
   if (linkHP < 1) {
     state = -2;
   }
 
   if (linkHit === 1) {
-    if (linkIFrames === 0) {
+    if (linkHitRed === 0) {
       linkHP--;
-      linkIFrames = 60;
+      linkHitRed = 60;
     }
-    else if (linkIFrames > 1) {
-      linkIFrames--;
+    else if (linkHitRed > 1) {
+      linkHitRed--;
     }
     else {
       linkHit = 0;
-      linkIFrames--;
+      linkHitRed--;
     }
   }
 
   if (sprintTimer === 0) {
     gravity = 1;
-    if (keyIsDown(65)) {
-      if (keyIsDown(68)) {
+    if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
+      if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
         velocityX = 0;
       }
       else {
@@ -167,7 +183,7 @@ function draw() {
         velocityX = -8;
       }
     }
-    else if (keyIsDown(68)) {
+    else if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
       linkFacing = "right";
       velocityX = 8;
     }
@@ -238,20 +254,23 @@ function draw() {
   }
   velocityY = velocityY + gravity;
 
-  if (linkHit === 0 || linkIFrames % 10 < 5) {
+  if (linkHit === 0 || linkHitRed % 10 < 5) {
     if (linkFacing === "right") {
-      image(linkRight, linkX, linkY, 80, 160);
+      image(linkRight, linkX, linkY, 100, 160);
     }
     else {
-      image(linkLeft, linkX, linkY, 80, 160);
+      image(linkLeft, linkX, linkY, 100, 160);
     }
   }
   else {
-    image(linkRed, linkX, linkY, 80, 160);
+    image(linkRed, linkX, linkY, 100, 160);
   }
 
   if (state === -2) {
     drawGameOver();
+  }
+  if (state === -3) {
+    Menu();
   }
   if (state === -1) {
     drawVictory();
