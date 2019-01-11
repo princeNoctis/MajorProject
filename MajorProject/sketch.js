@@ -270,7 +270,58 @@ function draw() {
 
 
 function drawTutorial(){
-
+  if (keyIsDown(51) && tutorialTimer === 0) {
+    state = 2;
+  }
+  if (keyIsDown(49) && tutorialTimer === 0) {
+    tutorialstate = tutorialstate + 1;
+    tutorialTimer = 30;
+  }
+  if (tutorialTimer > 0) {
+    tutorialTimer = tutorialTimer - 1;
+  }
+  textSize(20);
+  if (tutorialstate === 0) {
+    text("Welcome to the tutorial. Press 1 to proceed. Press 2 to skip.", 50, 600);
+    if (keyIsDown(50)) {
+      tutorialTimer = 30;
+      tutorialstate = 9;
+    }
+  }
+  else if (tutorialstate === 1) {
+    text("Press A to move left, and D to move right. Press 1 to proceed.", 50, 600);
+  }
+  else if (tutorialstate === 2) {
+    text("Press space to jump. You can move while in the air.", 50, 600);
+  }
+  else if (tutorialstate === 3) {
+    text("Press shift to dash. You can dash while in the air.", 50, 600);
+  }
+  else if (tutorialstate === 4) {
+    text("Press enter to attack. Attacks and dashes have a 0.5 second cooldown.", 50, 600);
+  }
+  else if (tutorialstate === 5) {
+    text("Hit enemies with your attack to defeat them. Avoid touching them and their attacks.", 50, 600);
+  }
+  else if (tutorialstate === 6) {
+    text("Your health is shown on the top left corner of your screen.", 50, 600);
+  }
+  else if (tutorialstate === 7) {
+    text("The enemies' health is shown on the top right corner.", 50, 600);
+  }
+  else if (tutorialstate === 8) {
+    text("Time to face your first foe, the Slime boss!", 50, 600);
+  }
+  else if (tutorialstate === 9) {
+    text("Press 1 to for casual mode, and 2 for normal mode.", 50, 600);
+    if (keyIsDown(50) && tutorialTimer === 0) {
+      tutorialstate++;
+      difficulty = 1;
+    }
+  }
+  else if (tutorialstate === 10) {
+    state = 1;
+  }
 }
 
 
