@@ -81,13 +81,9 @@ function preload(){
   linkRight = loadImage("assets/linkRight.png");
   linkLeft = loadImage("assets/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
-
-
-  background = loadImage("assets/background.png");
-  //
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
-  //
+  background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
   // slimeBoss = loadImage("slimeBoss.png");
   // slimeBossCharge = loadImage("slimeBossCharge.png");
   // slimeBossTell = loadImage("slimeBossTell.png");
@@ -101,7 +97,7 @@ function preload(){
   // gameOver = loadImage("gameOver.png");
   // victory = loadImage("victory.png");
   //
-  // enemyHealths = loadImage("enemyHealths.png");
+  enemyHealths = loadImage("assets/enemyHealths.png");
   heart = loadImage("assets/heart.png");
 }
 
@@ -153,7 +149,7 @@ function setup() {
 
 
 function draw() {
-  image(background, 0, 0, 1280, 640);
+  animation(background, 300, 150);
   if (linkHP < 1) {
     state = -2;
   }
@@ -256,21 +252,21 @@ function draw() {
 
   if (linkHit === 0 || linkHitRed % 10 < 5) {
     if (linkFacing === "right") {
-      image(linkRight, linkX, linkY, 100, 160);
+      image(linkRight, linkX, linkY, 120, 160);
     }
     else {
-      image(linkLeft, linkX, linkY, 100, 160);
+      image(linkLeft, linkX, linkY, 120, 160);
     }
   }
   else {
-    image(linkRed, linkX, linkY, 100, 160);
+    image(linkRed, linkX, linkY, 120, 160);
   }
 
   if (state === -2) {
     drawGameOver();
   }
   if (state === -3) {
-    Menu();
+    Menu ();
   }
   if (state === -1) {
     drawVictory();
@@ -299,8 +295,9 @@ function drawTutorial(){
   if (tutorialTimer > 0) {
     tutorialTimer = tutorialTimer - 1;
   }
-  textSize(20);
+  textSize(30);
   if (tutorialstate === 0) {
+    fill("white");
     text("Welcome to the tutorial. Press 1 to proceed. Press 2 to skip.", 50, 600);
     if (keyIsDown(50)) {
       tutorialTimer = 30;
