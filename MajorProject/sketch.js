@@ -149,7 +149,7 @@ function setup() {
 
 
 function draw() {
-  animation(background, 300, 150);
+  animation(background, 640, 320);
   if (linkHP < 1) {
     state = -2;
   }
