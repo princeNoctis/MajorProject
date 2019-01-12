@@ -8,8 +8,10 @@
 // ball being spit towardst the player
 
 let backgroundMusic;
-let background;
-
+let bg1, bg2, bg3, bg4, bg5, bg6;
+let insideOfLevel;
+let outsideOfLevel;
+let link;
 let linkRight;
 let linkLeft;
 let linkX;
@@ -78,19 +80,25 @@ let spearThrowRight;
 
 
 function preload(){
-  linkRight = loadImage("assets/linkRight.png");
-  linkLeft = loadImage("assets/linkLeft.png");
+  bg1 = loadImage("assets/PNG/Hills Layer 01.png");
+  bg2 = loadImage("assets/PNG/Hills Layer 02.png");
+  bg3 = loadImage("assets/PNG/Hills Layer 03.png");
+  bg4 = loadImage("assets/PNG/Hills Layer 04.png");
+  bg5 = loadImage("assets/PNG/Hills Layer 05.png");
+  bg6 = loadImage("assets/PNG/Hills Layer 06.png");
+  linkRight = loadImage("assets/a/linkRight.png");
+  linkLeft = loadImage("assets/guyright/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
-  background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
-  // slimeBoss = loadImage("slimeBoss.png");
-  // slimeBossCharge = loadImage("slimeBossCharge.png");
-  // slimeBossTell = loadImage("slimeBossTell.png");
-  // slimeBossSpit = loadImage("slimeBossSpit.png");
-  // slimeBossBall = loadImage("slimeBossBall.png");
-  // slimeBossSpikes = loadImage("slimeBossSpikes.png");
-  // slimeBossRed = loadImage("slimeBossRed.png");
+  // background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
+  slimeBoss = loadImage("assets/slimeBoss.png");
+  slimeBossCharge = loadImage("assets/slimeBossCharge.png");
+  slimeBossTell = loadImage("assets/slimeBossTell.png");
+  slimeBossSpit = loadImage("assets/slimeBossSpit.png");
+  slimeBossBall = loadImage("assets/slimeBossBall.png");
+  slimeBossSpikes = loadImage("assets/slimeBossSpikes.png");
+  slimeBossRed = loadImage("assets/slimeBossRed.png");
   //
   linkRed = loadImage("assets/linkRed.png");
   //
@@ -149,7 +157,8 @@ function setup() {
 
 
 function draw() {
-  animation(background, 640, 320);
+  // animation(background, 640, 320);
+  parallaxEffect();
   if (linkHP < 1) {
     state = -2;
   }
@@ -283,6 +292,30 @@ function draw() {
   drawHealth();
 }
 
+function parallaxEffect(){
+  background(bg1);
+
+  image(bg2, 0 -linkX%width, 0, width, height);
+  image(bg2, 0 -linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+
+  image(bg3, 0 - 1.25*linkX%width, 0, width, height);
+  image(bg3, 0 - 1.25*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+
+  image(bg4, 0 - 1.5*linkX%width, 0, width, height);
+  image(bg4, 0 - 1.5*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+
+  image(bg5, 0 - 1.75*linkX%width, 0, width, height);
+  image(bg5, 0 - 1.75*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+
+}
+
+
+
+function playerLink(){
+  link = createSprite(linkX,linkY,120,160);
+  link.addAnimation("facing right","assets/")
+
+}
 
 function drawTutorial(){
   if (keyIsDown(51) && tutorialTimer === 0) {
@@ -348,6 +381,7 @@ function drawSlime() {
 function drawGameOver() {
 
 }
+
 function drawHealth() {
   if (linkHP > 0) {
     image(heart, 35, 20, 40, 40);
@@ -358,38 +392,54 @@ function drawHealth() {
   if (linkHP > 2) {
     image(heart, 105, 20, 40, 40);
   }
-  // if (enemyHP > 0) {
-  //   image(enemyHealths, 1220, 20, 40, 40);
-  // }
-  // if (enemyHP > 1) {
-  //   image(enemyHealths, 1160, 20, 40, 40);
-  // }
-  // if (enemyHP > 2) {
-  //   image(enemyHealths, 1100, 20, 40, 40);
-  // }
-  // if (enemyHP > 3) {
-  //   image(enemyHealths, 1040, 20, 40, 40);
-  // }
-  // if (enemyHP > 4) {
-  //   image(enemyHealths, 980, 20, 40, 40);
-  // }
-  // if (enemyHP > 5) {
-  //   image(enemyHealths, 920, 20, 40, 40);
-  // }
-  // if (enemyHP > 6) {
-  //   image(enemyHealths, 860, 20, 40, 40);
-  // }
-  // if (enemyHP > 7) {
-  //   image(enemyHealths, 800, 20, 40, 40);
-  // }
-  // if (enemyHP > 8) {
-  //   image(enemyHealths, 740, 20, 40, 40);
-  // }
-  // if (enemyHP > 9) {
-  //   image(enemyHealths, 680, 20, 40, 40);
-  // }
+  if (enemyHP > 0) {
+    image(enemyHealths, 1220, 20, 40, 40);
+  }
+  if (enemyHP > 1) {
+    image(enemyHealths, 1160, 20, 40, 40);
+  }
+  if (enemyHP > 2) {
+    image(enemyHealths, 1100, 20, 40, 40);
+  }
+  if (enemyHP > 3) {
+    image(enemyHealths, 1040, 20, 40, 40);
+  }
+  if (enemyHP > 4) {
+    image(enemyHealths, 980, 20, 40, 40);
+  }
+  if (enemyHP > 5) {
+    image(enemyHealths, 920, 20, 40, 40);
+  }
+  if (enemyHP > 6) {
+    image(enemyHealths, 860, 20, 40, 40);
+  }
+  if (enemyHP > 7) {
+    image(enemyHealths, 800, 20, 40, 40);
+  }
+  if (enemyHP > 8) {
+    image(enemyHealths, 740, 20, 40, 40);
+  }
+  if (enemyHP > 9) {
+    image(enemyHealths, 680, 20, 40, 40);
+  }
 }
 
+let end = false;
+function endPoint(x, y) {
+  push();
+  fill(20);
+  rect(x, y - 100, 50, 100);
+  pop();
+
+  if (x <= width/2) {
+    end = true;
+  }
+
+  if (collideRectRect(x, y - 100, 50, 100, playerX, playerY, playerW, playerH)) {
+    outsideOfLevel = false;
+    insideOfLevel = true;
+  }
+}
 
 function menu(){
 
