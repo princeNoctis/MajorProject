@@ -435,7 +435,7 @@ function endPoint(x, y) {
     end = true;
   }
 
-  if (collideRectRect(x, y - 100, 50, 100, playerX, playerY, playerW, playerH)) {
+  if (collideRectRect(x, y - 100, 50, 100, linkX, linkY, 120, 160)) {
     outsideOfLevel = false;
     insideOfLevel = true;
   }
