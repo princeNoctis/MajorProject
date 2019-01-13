@@ -87,7 +87,7 @@ function preload(){
   bg5 = loadImage("assets/PNG/Hills Layer 05.png");
   bg6 = loadImage("assets/PNG/Hills Layer 06.png");
   linkRight = loadImage("assets/a/linkRight.png");
-  linkLeft = loadImage("assets/guyright/linkLeft.png");
+  linkLeft = loadImage("assets/linkright/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
@@ -185,12 +185,12 @@ function draw() {
       }
       else {
         linkFacing = "left";
-        velocityX = -8;
+        velocityX = -5;
       }
     }
     else if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
       linkFacing = "right";
-      velocityX = 8;
+      velocityX = 5;
     }
     else {
       velocityX = 0;
@@ -295,17 +295,18 @@ function draw() {
 function parallaxEffect(){
   background(bg1);
 
-  image(bg2, 0 -linkX % width, 0, width, height);
+  image(bg2, 0 -linkX % width, 0, width, height);// the first image is before the parallax effect happens
+
   image(bg2, 0 -linkX % width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3, 0 - 1.25*linkX % width, 0, width, height);
-  image(bg3, 0 - 1.25*linkX % width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg3, 0 - 1.05*linkX % width, 0, width, height);
+  image(bg3, 0 - 1.05*linkX % width + width, 0, width, height);
 
-  image(bg4, 0 - 1.5*linkX% width, 0, width, height);
-  image(bg4, 0 - 1.5*linkX% width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg4, 0 - 1.25*linkX% width, 0, width, height);
+  image(bg4, 0 - 1.25*linkX% width + width, 0, width, height);
 
-  image(bg5, 0 - 1.75*linkX% width, 0, width, height);
-  image(bg5, 0 - 1.75*linkX% width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg5, 0 - 1.50*linkX% width, 0, width, height);
+  image(bg5, 0 - 1.50*linkX% width + width, 0, width, height);
 
 }
 
@@ -444,9 +445,62 @@ function endPoint(x, y) {
 // function playerLink(){
 //   link = createSprite(linkX,linkY,120,160);
 //   link.addAnimation("facing right","assets/a/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
-//   link.addAnimation("facing left","assets/guyright/linkleft.png","assets/guyright/linkRight2.png","assets/guyright/linkRight3.png","assets/guyright/linkRight4.png","assets/guyright/linkRight5.png","assets/guyright/linkRight6.png");
+//   link.addAnimation("facing left","assets/linkright/linkleft.png","assets/linkright/linkRight2.png","assets/linkright/linkRight3.png","assets/linkright/linkRight4.png","assets/linkright/linkRight5.png","assets/linkright/linkRight6.png");
 //   drawSprite();
 // }
+
+function drawSlime() {
+
+		if (enemyHP < 1) {
+		state = -1;
+	}
+
+	if (slash == 1) {
+		if (linkFacing == "right") {
+
+			if ( abs( (guyX - enemyX - 40) ) < 200 && abs( (guyY - enemyY - 40) ) < 200 ) {
+				enemyHit = 1;
+			}
+		} else {
+			if ( abs( (guyX - enemyX - 200) ) < 200 && abs( (guyY - enemyY - 40) ) < 200 ) {
+					enemyHit = 1;
+			}
+		}
+	}
+
+	if (enemyHit == 1) {
+		if (enemyIFrames == 0) {
+			enemyHP--;
+			enemyIFrames = 20;
+		} else if (enemyIFrames > 1) {
+			enemyIFrames--;
+		} else {
+			enemyHit = 0;
+			enemyIFrames--;
+		}
+	}
+
+	if (enemyHit == 0 || enemyIFrames % 10 < 5) {
+		if (enemyState == "slime") {
+			image(slimeBoss, enemyX, enemyY, 320, 240);
+		}
+		if (enemyState == "tell") {
+			image(slimeBossTell, enemyX, enemyY, 320, 240);
+		}
+		if (enemyState == "spit") {
+			image(slimeBossSpit, enemyX, enemyY, 320, 240);
+		}
+		if (enemyState == "charge") {
+			image(slimeBossCharge, enemyX, enemyY, 320, 240);
+		}
+	} else {
+		image(slimeBossRed, enemyX, enemyY, 320, 240);
+	}
+
+	if ( abs(linkX - enemyX - 120 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
+		guyHit = 1;
+	}
+
 
 function menu(){
 
