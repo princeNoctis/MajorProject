@@ -80,12 +80,12 @@ let spearThrowRight;
 
 
 function preload(){
-  bg1 = loadImage("assets/PNG/Hills Layer 01.png");
-  bg2 = loadImage("assets/PNG/Hills Layer 02.png");
-  bg3 = loadImage("assets/PNG/Hills Layer 03.png");
-  bg4 = loadImage("assets/PNG/Hills Layer 04.png");
-  bg5 = loadImage("assets/PNG/Hills Layer 05.png");
-  bg6 = loadImage("assets/PNG/Hills Layer 06.png");
+  bg1 = loadImage("assets/back.png");
+  bg2 = loadImage("assets/back.png");
+  bg3 = loadImage("assets/back.png");
+  bg4 = loadImage("assets/back.png");
+  bg5 = loadImage("assets/back.png");
+  bg6 = loadImage("assets/back.png");
   linkRight = loadImage("assets/a/linkRight.png");
   linkLeft = loadImage("assets/guyright/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
@@ -157,6 +157,7 @@ function setup() {
 
 
 function draw() {
+  fill("black");
   // animation(background, 640, 320);
   parallaxEffect();
   if (linkHP < 1) {
@@ -179,6 +180,20 @@ function draw() {
 
   if (sprintTimer === 0) {
     gravity = 1;
+    // // We limit the movements of the player to the right
+    // if (linkX < width/2 - playerW/2) {
+    //   linkX = linkX + playerSpeed;
+    // } else {
+    //   if (end === false) {
+    //     // If we reach the middle, the player wont move to the right but the world will move to the left.
+    //     worldX = worldX + playerSpeed;
+    //   }
+    //   else {
+    //     if (linkX < width) {
+    //       linkX = linkX + playerSpeed;
+    //     }
+    //   }
+    // }
     if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
       if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
         velocityX = 0;
@@ -275,7 +290,7 @@ function draw() {
     drawGameOver();
   }
   if (state === -3) {
-    Menu ();
+    Menu();
   }
   if (state === -1) {
     drawVictory();
@@ -287,7 +302,7 @@ function draw() {
     drawSlime();
   }
   if (state === 2) {
-    drawGuardian();
+    drawSecondBoss();
   }
   drawHealth();
 }
@@ -295,27 +310,28 @@ function draw() {
 function parallaxEffect(){
   background(bg1);
 
-  image(bg2, 0 -linkX%width, 0, width, height);
-  image(bg2, 0 -linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg2, 0 -linkX % width, 0, width, height);
+  image(bg2, 0 -linkX % width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3, 0 - 1.25*linkX%width, 0, width, height);
-  image(bg3, 0 - 1.25*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg3, 0 - 1.25*linkX % width, 0, width, height);
+  image(bg3, 0 - 1.25*linkX % width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
 
-  image(bg4, 0 - 1.5*linkX%width, 0, width, height);
-  image(bg4, 0 - 1.5*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg4, 0 - 1.5*linkX% width, 0, width, height);
+  image(bg4, 0 - 1.5*linkX% width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
 
-  image(bg5, 0 - 1.75*linkX%width, 0, width, height);
-  image(bg5, 0 - 1.75*linkX%width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
-
-}
-
-
-
-function playerLink(){
-  link = createSprite(linkX,linkY,120,160);
-  link.addAnimation("facing right","assets/")
+  image(bg5, 0 - 1.75*linkX% width, 0, width, height);
+  image(bg5, 0 - 1.75*linkX% width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
 
 }
+
+
+
+// function playerLink(){
+//   link = createSprite(linkX,linkY,120,160);
+//   link.addAnimation("facing right","assets/a/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
+//   link.addAnimation("facing left","assets/guyright/linkleft.png","assets/guyright/linkRight2.png","assets/guyright/linkRight3.png","assets/guyright/linkRight4.png","assets/guyright/linkRight5.png","assets/guyright/linkRight6.png");
+//   drawSprite();
+// }
 
 function drawTutorial(){
   if (keyIsDown(51) && tutorialTimer === 0) {
@@ -446,6 +462,6 @@ function menu(){
 }
 
 
-function drawganondorf() {
+function drawSecondBoss() {
 
 }
