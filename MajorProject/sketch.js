@@ -94,7 +94,7 @@ function preload(){
   // background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
   slimeBoss = loadImage("assets/slimeBoss.png");
   slimeBossCharge = loadImage("assets/slimeBossCharge.png");
-  slimeBossPredict = loadImage("assets/slimeBossPredict.png");
+  slimeBossPredict = loadImage("assets/slimeBosstell.png");
   slimeBossSpit = loadImage("assets/slimeBossSpit.png");
   slimeBossBall = loadImage("assets/slimeBossBall.png");
   slimeBossSpikes = loadImage("assets/slimeBossSpikes.png");
@@ -176,7 +176,7 @@ function draw() {
       linkHitRed--;
     }
   }
-
+///////move left or right////////////////////////////////
   if (sprintTimer === 0) {
     gravity = 1;
     if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
@@ -221,7 +221,7 @@ function draw() {
   else {
     sprintTimer = sprintTimer - 1;
   }
-
+  /////////boundeirs/////////////////////////////
   if (linkY + velocityY <= 400) {
     linkY = linkY + velocityY;
   }
@@ -238,7 +238,7 @@ function draw() {
   else {
     linkX = linkX + velocityX;
   }
-
+  ////////////////dash cooldown and smash////////////////
   if (sprintCooldown > 0){
     sprintCooldown = sprintCooldown - 1;
   }
@@ -258,7 +258,7 @@ function draw() {
     smashCooldown = smashCooldown - 1;
   }
   velocityY = velocityY + gravity;
-
+  ////////////link turns red when hit nad changing image left or right///////////////
   if (linkHit === 0 || linkHitRed % 10 < 5) {
     if (linkFacing === "right") {
       image(linkRight, linkX, linkY, 120, 160);
@@ -270,7 +270,7 @@ function draw() {
   else {
     image(linkRed, linkX, linkY, 120, 160);
   }
-
+  ////////states///////////////////////////////
   if (state === -2) {
     drawGameOver();
   }
@@ -291,33 +291,25 @@ function draw() {
   }
   drawHealth();
 }
-
+//////////// parallaxEffect //////////////////////////
 function parallaxEffect(){
   background(bg1);
 
-  image(bg2, 0 -linkX % width, 5, width, height);// the first image is before the parallax effect happens
+  image(bg2, 0 -linkX % 1320, 5, 1320, 640);// the first image is before the parallax effect happens
 
-  image(bg2, 0 -linkX % width + width,5, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg2, 0 -linkX % 1320 + 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3, 0 - 2*linkX % width, 0, width, height);
-  image(bg3, 0 - 2*linkX % width + width, 0, width, height);
+  image(bg3, 0 - 2*linkX % 1320, 0, 1320, 640);
+  image(bg3, 0 - 2*linkX % 1320 + 1320, 0, 1320, 640);
 
-  image(bg4, 0 - 1.25*linkX% width, 0, width, height);
-  image(bg4, 0 - 1.25*linkX% width + width, 0, width, height);
+  image(bg4, 0 - 1.25*linkX% 1320, 0, 1320, 640);
+  image(bg4, 0 - 1.25*linkX% 1320 + 1320, 0, 1320, 640);
 
-  image(bg5, 0 - 1.50*linkX% width, 0, width, height);
-  image(bg5, 0 - 1.50*linkX% width + width, 0, width, height);
-
-}
-
-
-
-function playerLink(){
-  link = createSprite(linkX,linkY,120,160);
-  link.addAnimation("facing right","assets/")
+  image(bg5, 0 - 1.50*linkX% 1320, 0, 1320, 640);
+  image(bg5, 0 - 1.50*linkX% 1320 + 1320, 0, 1320, 640);
 
 }
-
+/////////// the tutorial //////////////////////////////////
 function drawTutorial(){
   if (keyIsDown(51) && tutorialTimer === 0) {
     state = 2;
@@ -419,23 +411,23 @@ function drawHealth() {
     image(enemyHealths, 680, 20, 40, 40);
   }
 }
-
-let end = false;
-function endPoint(x, y) {
-  push();
-  fill(20);
-  rect(x, y - 100, 50, 100);
-  pop();
-
-  if (x <= width/2) {
-    end = true;
-  }
-
-  if (collideRectRect(x, y - 100, 50, 100, linkX, linkY, 120, 160)) {
-    outsideOfLevel = false;
-    insideOfLevel = true;
-  }
-}
+//
+// let end = false;
+// function endPoint(x, y) {
+//   push();
+//   fill(20);
+//   rect(x, y - 100, 50, 100);
+//   pop();
+//
+//   if (x <= 1320/2) {
+//     end = true;
+//   }
+//
+//   if (collideRectRect(x, y - 100, 50, 100, linkX, linkY, 120, 160)) {
+//     outsideOfLevel = false;
+//     insideOfLevel = true;
+//   }
+// }
 
 // function playerLink(){
 //   link = createSprite(linkX,linkY,120,160);
