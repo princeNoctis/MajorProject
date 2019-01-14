@@ -37,7 +37,7 @@ let smash;
 
 let slimeBoss;
 let slimeBossCharge;
-let slimeBossTell;
+let slimeBossPredict;
 let slimeBossSpit;
 let slimeBossBall;
 let slimeBossSpikes;
@@ -60,7 +60,7 @@ let enemyBallY;
 let enemyBallVelocityX;
 let enemyBallVelocityY;
 let enemyHit;
-let enemyIFrames;
+let enemyPhase;
 let enemyHP;
 
 let gameOver;
@@ -87,14 +87,14 @@ function preload(){
   bg5 = loadImage("assets/PNG/Hills Layer 05.png");
   bg6 = loadImage("assets/PNG/Hills Layer 06.png");
   linkRight = loadImage("assets/a/linkRight.png");
-  linkLeft = loadImage("assets/linkright/linkLeft.png");
+  linkLeft = loadImage("assets/guyright/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
   // background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
   slimeBoss = loadImage("assets/slimeBoss.png");
   slimeBossCharge = loadImage("assets/slimeBossCharge.png");
-  slimeBossTell = loadImage("assets/slimeBossTell.png");
+  slimeBossPredict = loadImage("assets/slimeBossPredict.png");
   slimeBossSpit = loadImage("assets/slimeBossSpit.png");
   slimeBossBall = loadImage("assets/slimeBossBall.png");
   slimeBossSpikes = loadImage("assets/slimeBossSpikes.png");
@@ -110,7 +110,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(1280, 640);
+  createCanvas(1320, 640);
   frameRate(60);
 
   linkX = 150;
@@ -149,7 +149,7 @@ function setup() {
   linkHP = 3;
 
   enemyHit = 0;
-  enemyIFrames = 0;
+  enemyPhase = 0;
   enemyHP = 10;
 
   difficulty = 0;
@@ -295,12 +295,12 @@ function draw() {
 function parallaxEffect(){
   background(bg1);
 
-  image(bg2, 0 -linkX % width, 0, width, height);// the first image is before the parallax effect happens
+  image(bg2, 0 -linkX % width, 5, width, height);// the first image is before the parallax effect happens
 
-  image(bg2, 0 -linkX % width + width, 0, width, height); // The second picture is used to have the illusion of an infinite background
+  image(bg2, 0 -linkX % width + width,5, width, height); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3, 0 - 1.05*linkX % width, 0, width, height);
-  image(bg3, 0 - 1.05*linkX % width + width, 0, width, height);
+  image(bg3, 0 - 2*linkX % width, 0, width, height);
+  image(bg3, 0 - 2*linkX % width + width, 0, width, height);
 
   image(bg4, 0 - 1.25*linkX% width, 0, width, height);
   image(bg4, 0 - 1.25*linkX% width + width, 0, width, height);
@@ -465,25 +465,25 @@ function drawSlime() {
   }
 
   if (enemyHit === 1) {
-    if (enemyIFrames === 0) {
+    if (enemyPhase === 0) {
       enemyHP--;
-      enemyIFrames = 20;
+      enemyPhase = 20;
     }
-    else if (enemyIFrames > 1) {
-      enemyIFrames--;
+    else if (enemyPhase > 1) {
+      enemyPhase--;
     }
     else {
       enemyHit = 0;
-      enemyIFrames--;
+      enemyPhase--;
     }
   }
 
-  if (enemyHit === 0 || enemyIFrames % 10 < 5) {
+  if (enemyHit === 0 || enemyPhase % 10 < 5) {
     if (enemyState === "slime") {
       image(slimeBoss, enemyX, enemyY, 320, 240);
     }
-    if (enemyState === "tell") {
-      image(slimeBossTell, enemyX, enemyY, 320, 240);
+    if (enemyState === "Predict") {
+      image(slimeBossPredict, enemyX, enemyY, 320, 240);
     }
     if (enemyState === "spit") {
       image(slimeBossSpit, enemyX, enemyY, 320, 240);
