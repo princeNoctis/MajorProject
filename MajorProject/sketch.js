@@ -374,11 +374,6 @@ function drawTutorial(){
   }
 }
 
-
-function drawSlime() {
-
-}
-
 function drawGameOver() {
 
 }
@@ -451,55 +446,60 @@ function endPoint(x, y) {
 
 function drawSlime() {
 
-		if (enemyHP < 1) {
-		state = -1;
-	}
+  if (enemyHP < 1) {
+    state = -1;
+  }
 
-	if (slash == 1) {
-		if (linkFacing == "right") {
+  if (smash === 1) {
+    if (linkFacing === "right") {
 
-			if ( abs( (guyX - enemyX - 40) ) < 200 && abs( (guyY - enemyY - 40) ) < 200 ) {
-				enemyHit = 1;
-			}
-		} else {
-			if ( abs( (guyX - enemyX - 200) ) < 200 && abs( (guyY - enemyY - 40) ) < 200 ) {
-					enemyHit = 1;
-			}
-		}
-	}
+      if ( abs( linkX - enemyX - 40 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
+        enemyHit = 1;
+      }
+    }
+    else {
+      if ( abs( linkX - enemyX - 200 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
+        enemyHit = 1;
+      }
+    }
+  }
 
-	if (enemyHit == 1) {
-		if (enemyIFrames == 0) {
-			enemyHP--;
-			enemyIFrames = 20;
-		} else if (enemyIFrames > 1) {
-			enemyIFrames--;
-		} else {
-			enemyHit = 0;
-			enemyIFrames--;
-		}
-	}
+  if (enemyHit === 1) {
+    if (enemyIFrames === 0) {
+      enemyHP--;
+      enemyIFrames = 20;
+    }
+    else if (enemyIFrames > 1) {
+      enemyIFrames--;
+    }
+    else {
+      enemyHit = 0;
+      enemyIFrames--;
+    }
+  }
 
-	if (enemyHit == 0 || enemyIFrames % 10 < 5) {
-		if (enemyState == "slime") {
-			image(slimeBoss, enemyX, enemyY, 320, 240);
-		}
-		if (enemyState == "tell") {
-			image(slimeBossTell, enemyX, enemyY, 320, 240);
-		}
-		if (enemyState == "spit") {
-			image(slimeBossSpit, enemyX, enemyY, 320, 240);
-		}
-		if (enemyState == "charge") {
-			image(slimeBossCharge, enemyX, enemyY, 320, 240);
-		}
-	} else {
-		image(slimeBossRed, enemyX, enemyY, 320, 240);
-	}
+  if (enemyHit === 0 || enemyIFrames % 10 < 5) {
+    if (enemyState === "slime") {
+      image(slimeBoss, enemyX, enemyY, 320, 240);
+    }
+    if (enemyState === "tell") {
+      image(slimeBossTell, enemyX, enemyY, 320, 240);
+    }
+    if (enemyState === "spit") {
+      image(slimeBossSpit, enemyX, enemyY, 320, 240);
+    }
+    if (enemyState === "charge") {
+      image(slimeBossCharge, enemyX, enemyY, 320, 240);
+    }
+  }
+  else {
+    image(slimeBossRed, enemyX, enemyY, 320, 240);
+  }
 
-	if ( abs(linkX - enemyX - 120 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
-		guyHit = 1;
-	}
+  if ( abs(linkX - enemyX - 120 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
+    linkHit = 1;
+  }
+}
 
 
 function menu(){
