@@ -6,6 +6,14 @@
 // - describe what you did to take this project "above and beyond"
 // Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
 // ball being spit towardst the player
+// Major Project
+// Muhammad Saad Shiekh
+// December.9,2018
+//
+// Extra for Experts:
+// - describe what you did to take this project "above and beyond"
+// Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
+// ball being spit towardst the player
 
 let backgroundMusic;
 let bg1, bg2, bg3, bg4, bg5, bg6;
@@ -87,7 +95,7 @@ function preload(){
   bg5 = loadImage("assets/PNG/Hills Layer 05.png");
   bg6 = loadImage("assets/PNG/Hills Layer 06.png");
   linkRight = loadImage("assets/a/linkRight.png");
-  linkLeft = loadImage("assets/guyright/linkLeft.png");
+  linkLeft = loadImage("assets/linkLeft/linkLeft.png");
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
@@ -102,7 +110,7 @@ function preload(){
   //
   linkRed = loadImage("assets/linkRed.png");
   //
-  // gameOver = loadImage("gameOver.png");
+  gameOver = loadImage("assets/gameOver.png");
   // victory = loadImage("victory.png");
   //
   enemyHealths = loadImage("assets/enemyHealths.png");
@@ -238,7 +246,7 @@ function draw() {
   else {
     linkX = linkX + velocityX;
   }
-  ////////////////dash cooldown and smash////////////////
+  ////////////////sprint cooldown and smash////////////////
   if (sprintCooldown > 0){
     sprintCooldown = sprintCooldown - 1;
   }
@@ -322,8 +330,8 @@ function drawTutorial(){
     tutorialTimer = tutorialTimer - 1;
   }
   textSize(30);
+  fill("white");
   if (tutorialstate === 0) {
-    fill("white");
     text("Welcome to the tutorial. Press 1 to proceed. Press 2 to skip.", 50, 600);
     if (keyIsDown(50)) {
       tutorialTimer = 30;
@@ -337,10 +345,10 @@ function drawTutorial(){
     text("Press space to jump. You can move while in the air.", 50, 600);
   }
   else if (tutorialstate === 3) {
-    text("Press shift to dash. You can dash while in the air.", 50, 600);
+    text("Press shift to sprint. You can sprint while in the air.", 50, 600);
   }
   else if (tutorialstate === 4) {
-    text("Press enter to attack. Attacks and dashes have a 0.5 second cooldown.", 50, 600);
+    text("Press enter to attack. Attacks and sprintes have a 0.5 second cooldown.", 50, 600);
   }
   else if (tutorialstate === 5) {
     text("Hit enemies with your attack to defeat them. Avoid touching them and their attacks.", 50, 600);
@@ -367,7 +375,38 @@ function drawTutorial(){
 }
 
 function drawGameOver() {
+  image(gameOver, 320, 80, 640, 320)
+	text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600)
 
+	if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
+		enemyPhase = 0
+		enemyTimer = 0
+		linkHit = 0
+		linkHitRed = 0
+		linkHP = 3
+		enemyHit = 0
+		enemyPhase = 0
+		enemyHP = 10
+		smash = 0
+		sprintTimer = 0
+		sprintCooldown = 0
+		smashTimer = 0
+		smashCooldown = 0
+		enemyState = "slime"
+		enemyVelocityY = 0
+	  enemySide = "right"
+		enemyX = 800
+		enemyY = -241
+	}
+
+	if (keyIsDown(49)) {
+		state = 1
+		difficulty = 0
+	}
+	if (keyIsDown(50)) {
+		state = 1
+		difficulty = 1
+	}
 }
 
 function drawHealth() {
@@ -427,7 +466,7 @@ function drawHealth() {
 //     outsideOfLevel = false;
 //     insideOfLevel = true;
 //   }
-// }
+// }1
 
 // function playerLink(){
 //   link = createSprite(linkX,linkY,120,160);
@@ -472,26 +511,63 @@ function drawSlime() {
 
   if (enemyHit === 0 || enemyPhase % 10 < 5) {
     if (enemyState === "slime") {
-      image(slimeBoss, enemyX, enemyY, 320, 240);
+      image(slimeBoss, enemyX, enemyY, 320, 250);
     }
     if (enemyState === "Predict") {
-      image(slimeBossPredict, enemyX, enemyY, 320, 240);
+      image(slimeBossPredict, enemyX, enemyY, 320, 250);
     }
     if (enemyState === "spit") {
-      image(slimeBossSpit, enemyX, enemyY, 320, 240);
+      image(slimeBossSpit, enemyX, enemyY, 320, 250);
     }
     if (enemyState === "charge") {
-      image(slimeBossCharge, enemyX, enemyY, 320, 240);
+      image(slimeBossCharge, enemyX, enemyY, 320, 250);
     }
   }
   else {
-    image(slimeBossRed, enemyX, enemyY, 320, 240);
+    image(slimeBossRed, enemyX, enemyY, 320, 250);
   }
 
   if ( abs(linkX - enemyX - 120 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
     linkHit = 1;
   }
+  if (enemyPhase === 0) {
+    if (enemyTimer < 1) {
+      linkX = 160;
+      linkY = 400;
+      enemyTimer++;
+    }
+    else if (enemyTimer < 34) {
+      enemyVelocityY++;
+      enemyY = enemyY + enemyVelocityY;
+      enemyTimer++;
+    }
+    else if (enemyTimer < 64) {
+      image(slimeBossSpikes, enemyX - 160, enemyY + 80, 160, 160);
+      image(slimeBossSpikes, enemyX + 320, enemyY + 80, 160, 160);
+      if ( abs(linkX - enemyX - 120) < 360 && abs(linkY - enemyY - 120) < 160) {
+        linkHit = 1;
+      }
+      enemyTimer++;
+    }
+    else {
+      enemyTimer = 0;
+      enemyPhase = 1;
+    }
+  }
+
+  if (enemyPhase === 1) {
+    if (enemyTimer < 50 && difficulty === 0) {
+      enemyTimer++;
+      enemyState = "slime";
+    }
+    else {
+      enemyTimer = 0;
+      enemyPhase = 2 + floor( random() * 3 );
+    }
+  }
 }
+
+
 
 
 function menu(){
