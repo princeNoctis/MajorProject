@@ -5,15 +5,7 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 // Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
-// ball being spit towardst the player
-// Major Project
-// Muhammad Saad Shiekh
-// December.9,2018
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-// Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
-// ball being spit towardst the player
+// ball being spit towards the player/ ai against
 
 let backgroundMusic;
 let victorySound,gameOverSound;
@@ -174,117 +166,7 @@ function setup() {
 function draw() {
   // animation(background, 640, 320);
   parallaxEffect();
-  if (linkHP < 1) {
-    state = -2;
-  }
-
-  if (linkHit === 1) {
-    if (linkHitRed === 0) {
-      linkHP--;
-      linkHitRed = 60;
-    }
-    else if (linkHitRed > 1) {
-      linkHitRed--;
-    }
-    else {
-      linkHit = 0;
-      linkHitRed--;
-    }
-  }
-///////move left or right////////////////////////////////
-  if (sprintTimer === 0) {
-    gravity = 1;
-    if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
-      if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
-        velocityX = 0;
-      }
-      else {
-        linkFacing = "left";
-        velocityX = -5;
-      }
-    }
-    else if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
-      linkFacing = "right";
-      velocityX = 5;
-    }
-    else {
-      velocityX = 0;
-    }
-
-    if (keyIsDown(32) && linkY === 400) {
-      velocityY =  -24;
-    }
-    if (keyIsDown(16) && sprintCooldown === 0 && smashTimer === 0) {
-      sprintTimer = 9;
-      sprintCooldown = 30;
-      velocityY = 0;
-      gravity = 0;
-      if (linkFacing === "right") {
-        velocityX = 32;
-      }
-      else {
-        velocityX = -32;
-      }
-    }
-    if (keyIsDown(13) && smashCooldown === 0) {
-      smash = 1;
-      smashTimer = 6;
-      smashCooldown = 30;
-    }
-
-  }
-  else {
-    sprintTimer = sprintTimer - 1;
-  }
-  /////////boundeirs/////////////////////////////
-  if (linkY + velocityY <= 400) {
-    linkY = linkY + velocityY;
-  }
-  else {
-    linkY = 400;
-  }
-
-  if (linkX + velocityX < 0) {
-    linkX = 0;
-  }
-  else if (linkX + velocityX > 1200) {
-    linkX = 1200;
-  }
-  else {
-    linkX = linkX + velocityX;
-  }
-  ////////////////sprint cooldown and smash////////////////
-  if (sprintCooldown > 0){
-    sprintCooldown = sprintCooldown - 1;
-  }
-  if (smashTimer > 0) {
-    smashTimer = smashTimer - 1;
-    if (linkFacing === "right") {
-      image(smashRight, linkX + 80, linkY, 80, 160);
-    }
-    else {
-      image(smashLeft, linkX - 80, linkY, 80, 160);
-    }
-  }
-  else {
-    smash = 0;
-  }
-  if (smashCooldown > 0) {
-    smashCooldown = smashCooldown - 1;
-  }
-  velocityY = velocityY + gravity;
-  ////////////link turns red when hit nad changing image left or right///////////////
-  if (linkHit === 0 || linkHitRed % 10 < 5) {
-    if (linkFacing === "right") {
-      image(linkRight, linkX, linkY, 120, 160);
-    }
-    else {
-      image(linkLeft, linkX, linkY, 120, 160);
-    }
-  }
-  else {
-    image(linkRed, linkX, linkY, 120, 160);
-  }
+  player();
   ////////states///////////////////////////////
   if (state === -2) {
     drawGameOver();
@@ -579,70 +461,71 @@ function drawSlime() {
   }
   //////////////////////////////////////////////
   if (enemyPhase === 2) {
-		if (enemyTimer < 50) {
-			enemyState = "charge";
-			enemyTimer++;
-		}
+    if (enemyTimer < 50) {
+      enemyState = "charge";
+      enemyTimer++;
+    }
     else if (enemyTimer < 100 - 25 * difficulty ) {
-			enemyTimer++;
-			if (enemySide === "right") {
-				enemyX = enemyX - 16 + 16 * difficulty;
-			}
+      enemyTimer++;
+      if (enemySide === "right") {
+        enemyX = enemyX - 16 + 16 * difficulty;
+      }
       else {
-				enemyX = enemyX + 16 + 16 * difficulty;
-			}
-		}
+        enemyX = enemyX + 16 + 16 * difficulty;
+      }
+    }
     else if (enemyTimer < 115 - 25 * difficulty ) {
-			enemyTimer++;
-		}
+      enemyTimer++;
+    }
     else if (enemyTimer < 135 - 25 * difficulty ) {
-			enemyTimer++;
-			enemyState = "slime";
-			if (enemySide === "right") {
-				enemyX = enemyX + 8;
-			}
+      enemyTimer++;
+      enemyState = "slime";
+      if (enemySide === "right") {
+        enemyX = enemyX + 8;
+      }
       else {
-				enemyX = enemyX - 8;
-			}
-		}
+        enemyX = enemyX - 8;
+      }
+    }
     else if (enemyTimer < 155 - 25 * difficulty ) {
-			enemyTimer++;
-		}
+      enemyTimer++;
+    }
     else {
-			if (enemySide === "right") {
-				enemySide = "left";
-			}
+      if (enemySide === "right") {
+        enemySide = "left";
+      }
       else {
-				enemySide = "right";
-			}
-			enemyTimer = 0;
-			enemyPhase = 1;
-		}
-	}
+        enemySide = "right";
+      }
+      enemyTimer = 0;
+      enemyPhase = 1;
+    }
+  }
   //////////////////////////////////////////////
   if (enemyPhase === 3) {
-		if (enemyTimer < 1) {
-			enemyState = "slime"
-			enemyVelocityY = -34
-			enemyTimer++
-		} else if (enemyTimer < 68) {
-			enemyVelocityY++
-			enemyY = enemyY + enemyVelocityY
-			enemyTimer++
-		} else if (enemyTimer < 98) {
-			image(slimeBossSpikes, enemyX - 160, enemyY + 80, 160, 160)
-			image(slimeBossSpikes, enemyX + 320, enemyY + 80, 160, 160)
-			enemyTimer++
-
-			if ( abs(linkX - enemyX - 120) < 360 && abs(linkY - enemyY - 120) < 160) {
-				linkHit = 1;
-			}
-		}
+    if (enemyTimer < 1) {
+      enemyState = "slime";
+      enemyVelocityY = -34;
+      enemyTimer++;
+    }
+    else if (enemyTimer < 68) {
+      enemyVelocityY++;
+      enemyY = enemyY + enemyVelocityY;
+      enemyTimer++;
+    }
+    else if (enemyTimer < 98) {
+      image(slimeBossSpikes, enemyX - 160, enemyY + 80, 160, 160);
+      image(slimeBossSpikes, enemyX + 320, enemyY + 80, 160, 160);
+      enemyTimer++;
+      if ( abs(linkX - enemyX - 120) < 360 && abs(linkY - enemyY - 120) < 160) {
+        linkHit = 1;
+      }
+    }
     else {
       enemyTimer = 0;
-			enemyPhase = 1;
-		}
-	}
+      enemyPhase = 1;
+    }
+  }
 }
 
 function drawVictory() {
@@ -650,15 +533,14 @@ function drawVictory() {
   textSize(25);
   fill("white");
   text("Press 1 to restart on casual mode. Press 2 to restart on normal mode. Press 3 to challenge the Second boss.", 50, 600);
-
-	if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
-		enemyPhase = 0;
-		enemyTimer = 0;
-		linkHit = 0;
-		linkHitRed = 0;
-		linkHP = 3;
-		enemyHit = 0;
-		enemystate = 0;
+  if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
+    enemyPhase = 0;
+    enemyTimer = 0;
+    linkHit = 0;
+    linkHitRed = 0;
+    linkHP = 3;
+    enemyHit = 0;
+    enemystate = 0;
     enemyHP = 10;
     smash = 0;
     sprintTimer = 0;
@@ -693,4 +575,118 @@ function Menu(){
 
 function drawSecondBoss() {
 
+}
+
+function player(){
+  if (linkHP < 1) {
+    state = -2;
+  }
+
+  if (linkHit === 1) {
+    if (linkHitRed === 0) {
+      linkHP--;
+      linkHitRed = 60;
+    }
+    else if (linkHitRed > 1) {
+      linkHitRed--;
+    }
+    else {
+      linkHit = 0;
+      linkHitRed--;
+    }
+  }
+///////move left or right////////////////////////////////
+  if (sprintTimer === 0) {
+    gravity = 1;
+    if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
+      if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
+        velocityX = 0;
+      }
+      else {
+        linkFacing = "left";
+        velocityX = -5;
+      }
+    }
+    else if (keyIsDown(68)||keyIsDown(RIGHT_ARROW)) {
+      linkFacing = "right";
+      velocityX = 5;
+    }
+    else {
+      velocityX = 0;
+    }
+
+    if (keyIsDown(32) && linkY === 400) {
+      velocityY =  -24;
+    }
+    if (keyIsDown(16) && sprintCooldown === 0 && smashTimer === 0) {
+      sprintTimer = 9;
+      sprintCooldown = 30;
+      velocityY = 0;
+      gravity = 0;
+      if (linkFacing === "right") {
+        velocityX = 32;
+      }
+      else {
+        velocityX = -32;
+      }
+    }
+    if (keyIsDown(13) && smashCooldown === 0) {
+      smash = 1;
+      smashTimer = 6;
+      smashCooldown = 30;
+    }
+
+  }
+  else {
+    sprintTimer = sprintTimer - 1;
+  }
+  /////////boundeirs/////////////////////////////
+  if (linkY + velocityY <= 400) {
+    linkY = linkY + velocityY;
+  }
+  else {
+    linkY = 400;
+  }
+
+  if (linkX + velocityX < 0) {
+    linkX = 0;
+  }
+  else if (linkX + velocityX > 1200) {
+    linkX = 1200;
+  }
+  else {
+    linkX = linkX + velocityX;
+  }
+  ////////////////sprint cooldown and smash////////////////
+  if (sprintCooldown > 0){
+    sprintCooldown = sprintCooldown - 1;
+  }
+  if (smashTimer > 0) {
+    smashTimer = smashTimer - 1;
+    if (linkFacing === "right") {
+      image(smashRight, linkX + 80, linkY, 80, 160);
+    }
+    else {
+      image(smashLeft, linkX - 80, linkY, 80, 160);
+    }
+  }
+  else {
+    smash = 0;
+  }
+  if (smashCooldown > 0) {
+    smashCooldown = smashCooldown - 1;
+  }
+  velocityY = velocityY + gravity;
+  ////////////link turns red when hit nad changing image left or right///////////////
+  if (linkHit === 0 || linkHitRed % 10 < 5) {
+    if (linkFacing === "right") {
+      image(linkRight, linkX, linkY, 120, 160);
+    }
+    else {
+      image(linkLeft, linkX, linkY, 120, 160);
+    }
+  }
+  else {
+    image(linkRed, linkX, linkY, 120, 160);
+  }
 }
