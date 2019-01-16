@@ -9,6 +9,7 @@
 
 let backgroundMusic;
 let victorySound,gameOverSound;
+let menuScreen;
 
 let bg1, bg2, bg3, bg4, bg5, bg6;
 let insideOfLevel;
@@ -98,7 +99,7 @@ function preload(){
   //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
-  // background = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png","assets/backgorun/frame_6_delay-0.1s.png","assets/backgorun/frame_7_delay-0.1s.png");
+  // background =
   slimeBoss = loadImage("assets/slimeBoss.png");
   slimeBossCharge = loadImage("assets/slimeBossCharge.png");
   slimeBossPredict = loadImage("assets/slimeBosstell.png");
@@ -114,6 +115,7 @@ function preload(){
   //
   enemyHealths = loadImage("assets/enemyHealths.png");
   heart = loadImage("assets/heart.png");
+  menuScreen = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png");
 }
 
 function setup() {
@@ -164,7 +166,6 @@ function setup() {
 
 
 function draw() {
-  // animation(background, 640, 320);
   parallaxEffect();
   player();
   ////////states///////////////////////////////
@@ -568,11 +569,6 @@ function drawVictory() {
   }
 }
 
-function Menu(){
-
-}
-
-
 function drawSecondBoss() {
 
 }
@@ -689,4 +685,13 @@ function player(){
   else {
     image(linkRed, linkX, linkY, 120, 160);
   }
+}
+
+
+function Menu(){
+  animation(menuScreen, 640, 320);
+  push();
+  fill("peach");
+  rect(100,100,100,100);
+  pop();
 }
