@@ -91,7 +91,7 @@ let spearThrowRight;
 //state -1 = victoryscreen
 //state -2 = game OVER
 //state -3 = ???
-//state 1 = game 
+//state 1 = game
 
 
 function preload(){
@@ -337,7 +337,7 @@ function drawTutorial(){
   if (tutorialTimer > 0) {
     tutorialTimer = tutorialTimer - 1;
   }
-  textSize(30);
+  textSize(25);
   fill("white");
   if (tutorialstate === 0) {
     text("Welcome to the tutorial. Press 1 to proceed. Press 2 to skip.", 50, 600);
@@ -385,22 +385,24 @@ function drawTutorial(){
 function drawGameOver() {
   image(gameOver, 320, 80, 640, 320);
   text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600);
+  textSize(25);
+  fill("white");
 
   if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
-		enemyPhase = 0;
+    enemyPhase = 0;
     enemyTimer = 0;
-		linkHit = 0;
-		linkHitRed = 0;
-		linkHP = 3;
-		enemyHit = 0;
-		enemyPhase = 0;
-		enemyHP = 10;
-		smash = 0;
-		sprintTimer = 0;
-		sprintCooldown = 0;
-		smashTimer = 0;
-		smashCooldown = 0;
-		enemyState = "slime";
+    linkHit = 0;
+    linkHitRed = 0;
+    linkHP = 3;
+    enemyHit = 0;
+    enemyPhase = 0;
+    enemyHP = 10;
+    smash = 0;
+    sprintTimer = 0;
+    sprintCooldown = 0;
+    smashTimer = 0;
+    smashCooldown = 0;
+    enemyState = "slime";
     enemyVelocityY = 0;
     enemySide = "right";
     enemyX = 800;
@@ -538,6 +540,7 @@ function drawSlime() {
   if ( abs(linkX - enemyX - 120 ) < 200 && abs( linkY - enemyY - 40 ) < 200 ) {
     linkHit = 1;
   }
+  ////////////////////////////////////////////////////////
   if (enemyPhase === 0) {
     if (enemyTimer < 1) {
       linkX = 160;
@@ -563,7 +566,7 @@ function drawSlime() {
       enemyPhase = 1;
     }
   }
-
+  //////////////////////////////////////////////////////////////
   if (enemyPhase === 1) {
     if (enemyTimer < 50 && difficulty === 0) {
       enemyTimer++;
@@ -574,44 +577,112 @@ function drawSlime() {
       enemyPhase = 2 + floor( random() * 3 );
     }
   }
+  //////////////////////////////////////////////
+  if (enemyPhase === 2) {
+		if (enemyTimer < 50) {
+			enemyState = "charge";
+			enemyTimer++;
+		}
+    else if (enemyTimer < 100 - 25 * difficulty ) {
+			enemyTimer++;
+			if (enemySide === "right") {
+				enemyX = enemyX - 16 + 16 * difficulty;
+			}
+      else {
+				enemyX = enemyX + 16 + 16 * difficulty;
+			}
+		}
+    else if (enemyTimer < 115 - 25 * difficulty ) {
+			enemyTimer++;
+		}
+    else if (enemyTimer < 135 - 25 * difficulty ) {
+			enemyTimer++;
+			enemyState = "slime";
+			if (enemySide === "right") {
+				enemyX = enemyX + 8;
+			}
+      else {
+				enemyX = enemyX - 8;
+			}
+		}
+    else if (enemyTimer < 155 - 25 * difficulty ) {
+			enemyTimer++;
+		}
+    else {
+			if (enemySide === "right") {
+				enemySide = "left";
+			}
+      else {
+				enemySide = "right";
+			}
+			enemyTimer = 0;
+			enemyPhase = 1;
+		}
+	}
+  //////////////////////////////////////////////
+  if (enemyPhase === 3) {
+		if (enemyTimer < 1) {
+			enemyState = "slime"
+			enemyVelocityY = -34
+			enemyTimer++
+		} else if (enemyTimer < 68) {
+			enemyVelocityY++
+			enemyY = enemyY + enemyVelocityY
+			enemyTimer++
+		} else if (enemyTimer < 98) {
+			image(slimeBossSpikes, enemyX - 160, enemyY + 80, 160, 160)
+			image(slimeBossSpikes, enemyX + 320, enemyY + 80, 160, 160)
+			enemyTimer++
+
+			if ( abs(linkX - enemyX - 120) < 360 && abs(linkY - enemyY - 120) < 160) {
+				linkHit = 1;
+			}
+		}
+    else {
+      enemyTimer = 0;
+			enemyPhase = 1;
+		}
+	}
 }
 
 function drawVictory() {
-  image(victory, 130, 160, 1320,640);
+  image(victory, 0, 0, 1320,640);
+  textSize(25);
+  fill("white");
   text("Press 1 to restart on casual mode. Press 2 to restart on normal mode. Press 3 to challenge the Second boss.", 50, 600);
 
 	if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
-		enemyPhase = 0
-		enemyTimer = 0
+		enemyPhase = 0;
+		enemyTimer = 0;
 		linkHit = 0;
-		linkHitRed = 0
+		linkHitRed = 0;
 		linkHP = 3;
 		enemyHit = 0;
-		enemystate = 0
-		enemyHP = 10;
-		smash = 0;
-		sprintTimer = 0;
-		sprintCooldown = 0
-		smashTimer = 0;
-		smashCooldown = 0
-		enemyState = "slime"
-		enemyVelocityY = 0
-	  enemySide = "right"
-		enemyX = 800;
-		enemyY = -241;
-	}
+		enemystate = 0;
+    enemyHP = 10;
+    smash = 0;
+    sprintTimer = 0;
+    sprintCooldown = 0;
+    smashTimer = 0;
+    smashCooldown = 0;
+    enemyState = "slime";
+    enemyVelocityY = 0;
+    enemySide = "right";
+    enemyX = 800;
+    enemyY = -241;
+  }
 
-	if (keyIsDown(49)) {
-		state = 1;
-		difficulty = 0;
-	}
-	if (keyIsDown(50)) {
-		state = 1;
-		difficulty = 1;
-	}
-	if (keyIsDown(51)) {
-		state = 2;
-		difficulty = 1;
+  if (keyIsDown(49)) {
+    state = 1;
+    difficulty = 0;
+  }
+  if (keyIsDown(50)) {
+    state = 1;
+    difficulty = 1;
+  }
+  if (keyIsDown(51)) {
+    state = 2;
+    difficulty = 1;
   }
 }
 
