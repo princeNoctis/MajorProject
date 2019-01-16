@@ -303,14 +303,15 @@ function draw() {
 }
 //////////// parallaxEffect //////////////////////////
 function parallaxEffect(){
-  background(bg1);
 
-  image(bg2, 0 -linkX % 1320, 5, 1320, 640);// the first image is before the parallax effect happens
+  image(bg1,0-0.05*linkX%1320,5,1320,640);
+  image(bg1,0-0.05*linkX%1320+1320,5,1320,640);
 
-  image(bg2, 0 -linkX % 1320 + 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
+  image(bg2, 0 -0.5*linkX % 1320, 5, 1320, 640);// the first image is before the parallax effect happens
+  image(bg2, 0 -0.5*linkX % 1320 + 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3, 0 - 2*linkX % 1320, 0, 1320, 640);
-  image(bg3, 0 - 2*linkX % 1320 + 1320, 0, 1320, 640);
+  image(bg3, 0 - 1*linkX % 1320, 0, 1320, 640);
+  image(bg3, 0 - 1*linkX % 1320 + 1320, 0, 1320, 640);
 
   image(bg4, 0 - 1.25*linkX% 1320, 0, 1320, 640);
   image(bg4, 0 - 1.25*linkX% 1320 + 1320, 0, 1320, 640);
