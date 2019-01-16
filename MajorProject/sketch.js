@@ -88,6 +88,11 @@ let spearRight;
 let spearThrowLeft;
 let spearThrowRight;
 
+//state -1 = victoryscreen
+//state -2 = game OVER
+//state -3 = ???
+//state 1 = game 
+
 
 function preload(){
   bg1 = loadImage("assets/PNG/Hills Layer 01.png");
