@@ -16,6 +16,8 @@
 // ball being spit towardst the player
 
 let backgroundMusic;
+let victorySound,gameOverSound;
+
 let bg1, bg2, bg3, bg4, bg5, bg6;
 let insideOfLevel;
 let outsideOfLevel;
@@ -111,7 +113,7 @@ function preload(){
   linkRed = loadImage("assets/linkRed.png");
   //
   gameOver = loadImage("assets/gameOver.png");
-  // victory = loadImage("victory.png");
+  victory = loadImage("assets/winScren.png");
   //
   enemyHealths = loadImage("assets/enemyHealths.png");
   heart = loadImage("assets/heart.png");
@@ -283,7 +285,7 @@ function draw() {
     drawGameOver();
   }
   if (state === -3) {
-    Menu ();
+    Menu();
   }
   if (state === -1) {
     drawVictory();
@@ -295,7 +297,7 @@ function draw() {
     drawSlime();
   }
   if (state === 2) {
-    drawGuardian();
+    drawSecondBoss();
   }
   drawHealth();
 }
@@ -339,13 +341,13 @@ function drawTutorial(){
     }
   }
   else if (tutorialstate === 1) {
-    text("Press A to move left, and D to move right. Press 1 to proceed.", 50, 600);
+    text("Press A or Arrow key left to move left, and D or Arrow key right to move right. Press 1 to proceed.", 50, 600);
   }
   else if (tutorialstate === 2) {
     text("Press space to jump. You can move while in the air.", 50, 600);
   }
   else if (tutorialstate === 3) {
-    text("Press shift to sprint. You can sprint while in the air.", 50, 600);
+    text("Press shift to roll. You can roll while in the air.", 50, 600);
   }
   else if (tutorialstate === 4) {
     text("Press enter to attack. Attacks and sprintes have a 0.5 second cooldown.", 50, 600);
@@ -375,38 +377,38 @@ function drawTutorial(){
 }
 
 function drawGameOver() {
-  image(gameOver, 320, 80, 640, 320)
-	text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600)
+  image(gameOver, 320, 80, 640, 320);
+  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600);
 
-	if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
-		enemyPhase = 0
-		enemyTimer = 0
-		linkHit = 0
-		linkHitRed = 0
-		linkHP = 3
-		enemyHit = 0
-		enemyPhase = 0
-		enemyHP = 10
-		smash = 0
-		sprintTimer = 0
-		sprintCooldown = 0
-		smashTimer = 0
-		smashCooldown = 0
-		enemyState = "slime"
-		enemyVelocityY = 0
-	  enemySide = "right"
-		enemyX = 800
-		enemyY = -241
-	}
+  if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
+		enemyPhase = 0;
+    enemyTimer = 0;
+		linkHit = 0;
+		linkHitRed = 0;
+		linkHP = 3;
+		enemyHit = 0;
+		enemyPhase = 0;
+		enemyHP = 10;
+		smash = 0;
+		sprintTimer = 0;
+		sprintCooldown = 0;
+		smashTimer = 0;
+		smashCooldown = 0;
+		enemyState = "slime";
+    enemyVelocityY = 0;
+    enemySide = "right";
+    enemyX = 800;
+    enemyY = -241;
+  }
 
-	if (keyIsDown(49)) {
-		state = 1
-		difficulty = 0
-	}
-	if (keyIsDown(50)) {
-		state = 1
-		difficulty = 1
-	}
+  if (keyIsDown(49)) {
+    state = 1;
+    difficulty = 0;
+  }
+  if (keyIsDown(50)) {
+    state = 1;
+    difficulty = 1;
+  }
 }
 
 function drawHealth() {
@@ -544,6 +546,7 @@ function drawSlime() {
     else if (enemyTimer < 64) {
       image(slimeBossSpikes, enemyX - 160, enemyY + 80, 160, 160);
       image(slimeBossSpikes, enemyX + 320, enemyY + 80, 160, 160);
+
       if ( abs(linkX - enemyX - 120) < 360 && abs(linkY - enemyY - 120) < 160) {
         linkHit = 1;
       }
@@ -567,10 +570,46 @@ function drawSlime() {
   }
 }
 
+function drawVictory() {
+  image(victory, 130, 160, 1320,640);
+  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode. Press 3 to challenge the Second boss.", 50, 600);
 
+	if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
+		enemyPhase = 0
+		enemyTimer = 0
+		linkHit = 0;
+		linkHitRed = 0
+		linkHP = 3;
+		enemyHit = 0;
+		enemystate = 0
+		enemyHP = 10;
+		smash = 0;
+		sprintTimer = 0;
+		sprintCooldown = 0
+		smashTimer = 0;
+		smashCooldown = 0
+		enemyState = "slime"
+		enemyVelocityY = 0
+	  enemySide = "right"
+		enemyX = 800;
+		enemyY = -241;
+	}
 
+	if (keyIsDown(49)) {
+		state = 1;
+		difficulty = 0;
+	}
+	if (keyIsDown(50)) {
+		state = 1;
+		difficulty = 1;
+	}
+	if (keyIsDown(51)) {
+		state = 2;
+		difficulty = 1;
+  }
+}
 
-function menu(){
+function Menu(){
 
 }
 
