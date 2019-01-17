@@ -5,6 +5,7 @@ body, html {
     overflow: hidden;
     text-align: center;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }

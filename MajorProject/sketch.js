@@ -9,7 +9,8 @@
 
 let backgroundMusic;
 let victorySound,gameOverSound;
-let menuScreen;
+let menuScreen, menuScreenSound;
+let lose;
 
 let bg1, bg2, bg3, bg4, bg5, bg6;
 let insideOfLevel;
@@ -35,6 +36,7 @@ let sprintCooldown;
 let smashRight;
 let smashLeft;
 let smashTimer;
+let easyButtonY=250,easyButtonX=200;
 let smashCooldown;
 let smash;
 
@@ -46,6 +48,7 @@ let slimeBossBall;
 let slimeBossSpikes;
 let slimeBossRed;
 
+let startGame;
 let state;
 
 let tutorialstate;
@@ -96,10 +99,8 @@ function preload(){
   bg6 = loadImage("assets/PNG/Hills Layer 06.png");
   linkRight = loadImage("assets/a/linkRight.png");
   linkLeft = loadImage("assets/linkLeft/linkLeft.png");
-  //linkRight = addAnimation("assets/linkRight.png","assets/a/linkRight2.png","assets/a/linkRight3.png","assets/a/linkRight4.png","assets/a/linkRight5.png","assets/a/linkRight6.png");
   smashRight = loadImage("assets/smashRight.png");
   smashLeft = loadImage("assets/smashLeft.png");
-  // background =
   slimeBoss = loadImage("assets/slimeBoss.png");
   slimeBossCharge = loadImage("assets/slimeBossCharge.png");
   slimeBossPredict = loadImage("assets/slimeBosstell.png");
@@ -111,8 +112,10 @@ function preload(){
   linkRed = loadImage("assets/linkRed.png");
   //
   gameOver = loadImage("assets/gameOver.png");
+  gameOverSound = loadSound("assets/gameOverSound.mp3");
   victory = loadImage("assets/winScren.png");
-  //
+  menuScreenSound = loadSound("assets/menu.mp3");
+  backgroundMusic = loadSound("assets/backgroundMusic.mp3");
   enemyHealths = loadImage("assets/enemyHealths.png");
   heart = loadImage("assets/heart.png");
   menuScreen = loadAnimation("assets/backgorun/frame_0_delay-0.1s.png","assets/backgorun/frame_1_delay-0.1s.png","assets/backgorun/frame_2_delay-0.1s.png","assets/backgorun/frame_3_delay-0.1s.png","assets/backgorun/frame_4_delay-0.1s.png","assets/backgorun/frame_5_delay-0.1s.png");
@@ -120,8 +123,8 @@ function preload(){
 
 function setup() {
   createCanvas(1320, 640);
-  frameRate(60);
-
+  menuScreenSound.play();
+  menuScreenSound.setVolume(0.8);
   linkX = 150;
   linkY = 300;
   linkFacing = "right";
@@ -137,7 +140,7 @@ function setup() {
   smashCooldown = 0;
   smash = 0;
 
-  state = 0;
+  state = -3;
   tutorialstate = 0;
   tutorialTimer = 0;
 
@@ -164,48 +167,51 @@ function setup() {
   difficulty = 0;
 }
 
-
 function draw() {
   parallaxEffect();
   player();
   ////////states///////////////////////////////
-  if (state === -2) {
-    drawGameOver();
-  }
+
   if (state === -3) {
     Menu();
+  }
+  if (state === -2) {
+    drawGameOver();
+    menuScreenSound.stop();
   }
   if (state === -1) {
     drawVictory();
   }
   if (state === 0) {
+    frameRate(60);
     drawTutorial();
   }
   if (state === 1) {
+    drawPlayersHealth();
+    drawEnemyHealth();
     drawSlime();
   }
   if (state === 2) {
     drawSecondBoss();
   }
-  drawHealth();
 }
 //////////// parallaxEffect //////////////////////////
 function parallaxEffect(){
+  background(bg1);
+  image(bg1,-0.05*linkX,5,1320,640);
+  image(bg1,-0.05*linkX+1320,5,1320,640);
 
-  image(bg1,0-0.05*linkX%1320,5,1320,640);
-  image(bg1,0-0.05*linkX%1320+1320,5,1320,640);
+  image(bg2, -0.5*linkX, 5, 1320, 640);// the first image is before the parallax effect happens
+  image(bg2, -0.5*linkX+ 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
 
-  image(bg2, 0 -0.5*linkX % 1320, 5, 1320, 640);// the first image is before the parallax effect happens
-  image(bg2, 0 -0.5*linkX % 1320 + 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
+  image(bg3,- 1*linkX,0, 1320, 640);
+  image(bg3,- 1*linkX+1320, 0, 1320, 640);
 
-  image(bg3, 0 - 1*linkX % 1320, 0, 1320, 640);
-  image(bg3, 0 - 1*linkX % 1320 + 1320, 0, 1320, 640);
+  image(bg4,- 1.25*linkX, 0, 1320, 640);
+  image(bg4,- 1.25*linkX+1320, 0, 1320, 640);
 
-  image(bg4, 0 - 1.25*linkX% 1320, 0, 1320, 640);
-  image(bg4, 0 - 1.25*linkX% 1320 + 1320, 0, 1320, 640);
-
-  image(bg5, 0 - 1.50*linkX% 1320, 0, 1320, 640);
-  image(bg5, 0 - 1.50*linkX% 1320 + 1320, 0, 1320, 640);
+  image(bg5,- 1.50*linkX, 0, 1320, 640);
+  image(bg5,- 1.50*linkX+1320, 0, 1320, 640);
 
 }
 /////////// the tutorial //////////////////////////////////
@@ -246,9 +252,11 @@ function drawTutorial(){
   }
   else if (tutorialstate === 6) {
     text("Your health is shown on the top left corner of your screen.", 50, 600);
+    drawPlayersHealth();
   }
   else if (tutorialstate === 7) {
     text("The enemies' health is shown on the top right corner.", 50, 600);
+    drawEnemyHealth();
   }
   else if (tutorialstate === 8) {
     text("Time to face your first foe, the Slime boss!", 50, 600);
@@ -270,7 +278,6 @@ function drawGameOver() {
   text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600);
   textSize(25);
   fill("white");
-
   if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
     enemyPhase = 0;
     enemyTimer = 0;
@@ -302,7 +309,7 @@ function drawGameOver() {
   }
 }
 
-function drawHealth() {
+function drawPlayersHealth() {
   if (linkHP > 0) {
     image(heart, 35, 20, 40, 40);
   }
@@ -312,7 +319,39 @@ function drawHealth() {
   if (linkHP > 2) {
     image(heart, 105, 20, 40, 40);
   }
+}
+
+function drawEnemyHealth(){
   if (enemyHP > 0) {
+    image(enemyHealths, 1220, 20, 40, 40);
+  }
+  if (enemyHP > 1) {
+    image(enemyHealths, 1160, 20, 40, 40);
+  }
+  if (enemyHP > 2) {
+    image(enemyHealths, 1100, 20, 40, 40);
+  }
+  if (enemyHP > 3) {
+    image(enemyHealths, 1040, 20, 40, 40);
+  }
+  if (enemyHP > 4) {
+    image(enemyHealths, 980, 20, 40, 40);
+  }
+  if (enemyHP > 5) {
+    image(enemyHealths, 920, 20, 40, 40);
+  }
+  if (enemyHP > 6) {
+    image(enemyHealths, 860, 20, 40, 40);
+  }
+  if (enemyHP > 7) {
+    image(enemyHealths, 800, 20, 40, 40);
+  }
+  if (enemyHP > 8) {
+    image(enemyHealths, 740, 20, 40, 40);
+  }
+  if (enemyHP > 9) {
+    image(enemyHealths, 680, 20, 40, 40);
+  }if (enemyHP > 0) {
     image(enemyHealths, 1220, 20, 40, 40);
   }
   if (enemyHP > 1) {
@@ -411,6 +450,9 @@ function drawSlime() {
     }
     if (enemyState === "spit") {
       image(slimeBossSpit, enemyX, enemyY, 320, 250);
+    }
+    if (enemyState === "charge") {
+      image(slimeBossCharge, enemyX, enemyY, 320, 250);
     }
     if (enemyState === "charge") {
       image(slimeBossCharge, enemyX, enemyY, 320, 250);
@@ -527,13 +569,45 @@ function drawSlime() {
       enemyPhase = 1;
     }
   }
+  ////////////////////////////////////////////////
+  if (enemyPhase === 4) {
+
+    if (enemyTimer < 49) {
+      enemyState = "Predict";
+      enemyTimer++;
+    }
+    else if (enemyTimer < 50) {
+
+      enemyBallX = enemyX + 80;
+      enemyBallY = enemyY + 40;
+      enemyBallVelocityX = (linkX - enemyX - 120)/ ( sqrt( pow( linkX - enemyX - 120 , 2 ) + pow( linkY - enemyY - 40 , 2) ) / (12 + 12 * difficulty));
+      enemyBallVelocityY = (linkY - enemyY - 40)/ ( sqrt( pow( linkX - enemyX - 120 , 2) + pow( linkY - enemyY - 40, 2) ) / (12 + 12 * difficulty) );
+      enemyTimer++;
+    }
+    else if (enemyTimer < 150 - 50 * difficulty ) {
+      enemyState = "spit";
+      enemyBallX = enemyBallX + enemyBallVelocityX;
+      enemyBallY = enemyBallY + enemyBallVelocityY;
+      image(slimeBossBall, enemyBallX, enemyBallY, 160, 160);
+      enemyTimer++;
+      if ( abs( linkX - enemyBallX - 40 ) < 120 && abs( linkY - enemyBallY ) < 160 ) {
+        linkHit = 1;
+      }
+
+
+    }
+    else {
+      enemyTimer = 0;
+      enemyPhase = 1;
+    }
+  }
 }
 
 function drawVictory() {
   image(victory, 0, 0, 1320,640);
   textSize(25);
   fill("white");
-  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode. Press 3 to challenge the Second boss.", 50, 600);
+  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode. Press 3 to challenge the Final boss.", 50, 600);
   if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
     enemyPhase = 0;
     enemyTimer = 0;
@@ -569,13 +643,10 @@ function drawVictory() {
   }
 }
 
-function drawSecondBoss() {
-
-}
-
 function player(){
   if (linkHP < 1) {
     state = -2;
+    lose = true;
   }
 
   if (linkHit === 1) {
@@ -591,7 +662,7 @@ function player(){
       linkHitRed--;
     }
   }
-///////move left or right////////////////////////////////
+  ///////move left or right////////////////////////////////
   if (sprintTimer === 0) {
     gravity = 1;
     if (keyIsDown(65)||keyIsDown(LEFT_ARROW)) {
@@ -647,6 +718,7 @@ function player(){
   if (linkX + velocityX < 0) {
     linkX = 0;
   }
+  ///////// if i increase this variable the parallax will contuinue unril he hits this value and stop
   else if (linkX + velocityX > 1200) {
     linkX = 1200;
   }
@@ -674,7 +746,7 @@ function player(){
   }
   velocityY = velocityY + gravity;
   ////////////link turns red when hit nad changing image left or right///////////////
-  if (linkHit === 0 || linkHitRed % 10 < 5) {
+  if (linkHit === 0 || linkHitRed % 10 < 3) {
     if (linkFacing === "right") {
       image(linkRight, linkX, linkY, 120, 160);
     }
@@ -687,11 +759,26 @@ function player(){
   }
 }
 
+function drawSecondBoss() {
+//////////////////////////////////////////////////
+///////////////////////////////////////////////////
+/////////////////////////////////////////
+///////////////////////////////////
+////////////////////////////////
+/////////////////////////
+//////////////////
+/////////////
+///////////
+///////
+/////
+////
+//
+}
 
 function Menu(){
-  animation(menuScreen, 640, 320);
-  push();
-  fill("peach");
-  rect(100,100,100,100);
-  pop();
+  frameRate(60);
+  animation(menuScreen, 660, 320);
+  if (keyIsDown(13)) {
+    state = 0;
+  }
 }
