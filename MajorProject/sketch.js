@@ -5,7 +5,7 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 // Resources - https://answers.unity.com/questions/239614/roll-a-ball-towards-the-player.html for the
-// ball being spit towards the player/ ai against
+// ball being spit towards the player ai against
 
 let backgroundMusic;
 let victorySound,gameOverSound;
@@ -105,9 +105,7 @@ function preload(){
   slimeBossBall = loadImage("assets/slimeBossBall.png");
   slimeBossSpikes = loadImage("assets/slimeBossSpikes.png");
   slimeBossRed = loadImage("assets/slimeBossRed.png");
-  //
   linkRed = loadImage("assets/linkRed.png");
-  //
   gameOver = loadImage("assets/gameOver.png");
   gameOverSound = loadSound("assets/gameOverSound.mp3");
   victory = loadImage("assets/winScren.png");
@@ -203,6 +201,7 @@ function draw() {
 //////////// parallaxEffect //////////////////////////
 function parallaxEffect(){
   background(bg1);
+
   image(bg1,-0.05*linkX,5,1320,640);
   image(bg1,-0.05*linkX+1320,5,1320,640);
 
@@ -279,10 +278,10 @@ function drawTutorial(){
 }
 
 function drawGameOver() {
-  image(gameOver, 320, 80, 640, 320);
-  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600);
   textSize(25);
   fill("white");
+  image(gameOver, 320, 80, 640, 320);
+  text("Press 1 to restart on casual mode. Press 2 to restart on normal mode.", 50, 600);
   if (keyIsDown(49) || keyIsDown(50) || keyIsDown(51)) {
     enemygoRed = 0;
     enemyTimer = 0;
@@ -688,7 +687,7 @@ function player(){
     }
     /////////////JUMPING////////////////////////////
     if (keyIsDown(32) && linkY === 400) {
-      velocityY =  -200;
+      velocityY =  -24;
     }
     if (keyIsDown(16) && sprintCooldown === 0 && smashTimer === 0) {
       sprintTimer = 9;
@@ -772,7 +771,7 @@ function drawSecondBoss() {
   fill("green");
   textSize(50);
   text("To Be Continued",500,320,400,400);
-  image(ganondorfLeft,790,200,490,490);
+  image(ganondorfLeft,790,200,520,490);
 /////////////////////////
 //////////////////
 /////////////
