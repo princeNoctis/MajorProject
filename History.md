@@ -59,4 +59,7 @@ sorta like a rpg 2d platformer
  - but having some issues with the loading the sound 
  - when the state changes for example game to end screen mutiple instinces of the music play
  creating a very disturbing sound
- - 
+### Jan.18 ### 
+ - found some glitches and bugs with the boss fight and parallax effect
+### Jan.19 ### 
+ - planing to hand in project
