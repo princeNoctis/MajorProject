@@ -1,4 +1,4 @@
-Proposal
+History
 ====================
 
 I want to build a game where there is a PLAYER has to defeat this slime boss 
