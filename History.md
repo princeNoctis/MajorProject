@@ -42,4 +42,21 @@ sorta like a rpg 2d platformer
  - still in progress with the boss 
  - added new images for the parallax
  - created menu screen
+### Jan.16 ### 
+ - added a diferent function for the player proproties
+ - edited the images for the game
+ - got a few phases of the slime boss finished
+ - menu screen stuff
+ - added a function for finish screen 
+ - added a function fpr death screen
+### Jan.17 ###
+ - added music and used CSS to make the menu look more appealing
+ - found some bugs in the gameplay
+ - added all the slime phases and finished everything 
+ - added death menu
+ - added win menu 
+ - even added a little To be continued boss 
+ - but having some issues with the loading the sound 
+ - when the state changes for example game to end screen mutiple instinces of the music play
+ creating a very disturbing sound
  - 
