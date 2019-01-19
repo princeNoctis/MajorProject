@@ -11,6 +11,6 @@ sorta like a rpg 2d platformer
 ### Jan.1 to Jan.7 ###
  - trying out the new library with a small little project 
 ### Jan.8 ###
- - listed all my variable names and setup
+ - listed all my variable names and setup for my real major project
 ### Jan.9 ###
  - 
