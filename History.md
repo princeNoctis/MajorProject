@@ -24,3 +24,22 @@ sorta like a rpg 2d platformer
  - making all the functions names 
  - organizing the variables
  - made the states and making the image of link change when turned right or left
+### Jan.11 ### 
+ - added the tutorial
+ - added all the images
+ - thinking of making a parallax effect
+### Jan.12 ### 
+ - got my parallax effect background moving 
+### Jan.13 ###
+ - trying aniamtions
+ - finally started working on slime boss Ai
+### Jan.14 ### 
+ - adding collision on slime and player
+ - added different phases the slime boss goes through
+ - struggling on how to make different phases of the boss
+ - added the image for the boss
+### Jan.15 ### 
+ - still in progress with the boss 
+ - added new images for the parallax
+ - created menu screen
+ - 
