@@ -14,9 +14,10 @@ let victorySound,gameOverSound;
 let menuScreen, menuScreenSound;
 let lose;
 
-let bg1, bg2, bg3, bg4, bg5, bg6;
+let background1, background2, background3, background4, background5, background6;
 let insideOfLevel;
 let outsideOfLevel;
+
 let link;
 let linkRight;
 let linkLeft;
@@ -27,6 +28,7 @@ let linkRed;
 let linkHit;
 let linkHitRed;
 let linkHP;
+
 let by,bx;
 let velocityY;
 let gravity;
@@ -91,12 +93,12 @@ let ganondorfRight;
 
 // preload function loading images and sounds
 function preload(){
-  bg1 = loadImage("assets/PNG/Hills Layer 01.png");
-  bg2 = loadImage("assets/PNG/Hills Layer 02.png");
-  bg3 = loadImage("assets/PNG/Hills Layer 03.png");
-  bg4 = loadImage("assets/PNG/Hills Layer 04.png");
-  bg5 = loadImage("assets/PNG/Hills Layer 05.png");
-  bg6 = loadImage("assets/PNG/Hills Layer 06.png");
+  background1 = loadImage("assets/PNG/Hills Layer 01.png");
+  background2 = loadImage("assets/PNG/Hills Layer 02.png");
+  background3 = loadImage("assets/PNG/Hills Layer 03.png");
+  background4 = loadImage("assets/PNG/Hills Layer 04.png");
+  background5 = loadImage("assets/PNG/Hills Layer 05.png");
+  background6 = loadImage("assets/PNG/Hills Layer 06.png");
   linkRight = loadImage("assets/a/linkRight.png");
   linkLeft = loadImage("assets/linkLeft/linkLeft.png");
   smashRight = loadImage("assets/smashRight.png");
@@ -123,11 +125,11 @@ function preload(){
 // setup function
 function setup() {
   createCanvas(1320, 640);
+  menuScreenSound.loop();
+  menuScreenSound.setVolume(0.8);
   lose = false;
   bx = width;
   by = 50;
-  menuScreenSound.loop();
-  menuScreenSound.setVolume(0.8);
   bird = createSprite(bx,by, 24, 24);
   bird.addAnimation("assets/bird/frame_0_delay-0.1s.png","assets/bird/frame_1_delay-0.1s.png","assets/bird/frame_2_delay-0.1s.png","assets/bird/frame_3_delay-0.1s.png","assets/bird/frame_4_delay-0.1s.png","assets/bird/frame_5_delay-0.1s.png");
   linkX = 150;
@@ -206,19 +208,19 @@ function draw() {
 }
 //////////// parallaxEffect //////////////////////////
 function parallaxEffect(){
-  background(bg1);
+  background(background1);
 
-  image(bg2,0 -1*linkX%1320, 5, 1320, 640);// the first image is before the parallax effect happens
-  image(bg2,0 -1*linkX%1320+ 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
+  image(background2,0 -1*linkX%1320, 5, 1320, 640);// the first image is before the parallax effect happens
+  image(background2,0 -1*linkX%1320+ 1320,5, 1320, 640); // The second picture is used to have the illusion of an infinite background
 
-  image(bg3,0- 1.25*linkX%1320,0, 1320, 640);
-  image(bg3,0- 1.25*linkX%1320+1320, 0, 1320, 640);
+  image(background3,0- 1.25*linkX%1320,0, 1320, 640);
+  image(background3,0- 1.25*linkX%1320+1320, 0, 1320, 640);
 
-  image(bg4,0- 1.50*linkX%1320, 0, 1320, 640);
-  image(bg4,0- 1.50*linkX%1320+1320, 0, 1320, 640);
+  image(background4,0- 1.50*linkX%1320, 0, 1320, 640);
+  image(background4,0- 1.50*linkX%1320+1320, 0, 1320, 640);
 
-  image(bg5,0- 1.75*linkX%1320, 0, 1320, 640);
-  image(bg5,0- 1.75*linkX%1320+1320, 0, 1320, 640);
+  image(background5,0- 1.75*linkX%1320, 0, 1320, 640);
+  image(background5,0- 1.75*linkX%1320+1320, 0, 1320, 640);
 
 }
 /////////// the tutorial //////////////////////////////////
@@ -464,7 +466,7 @@ function drawSlime() {
 			enemyTimer++;
 		}
     else {
-	  	enemyTimer = 0;
+      enemyTimer = 0;
 			enemystate = 1;
 		}
 	}
@@ -542,15 +544,15 @@ function drawSlime() {
 			}
 		}
     else {
-	  	enemyTimer = 0;
-			enemystate = 1;
-		}
-	}
-	if (enemystate === 4) {
-		if (enemyTimer < 49) {
-			enemyState = "tell";
-			enemyTimer++;
-		}
+      enemyTimer = 0;
+      enemystate = 1;
+    }
+  }
+  if (enemystate === 4) {
+    if (enemyTimer < 49) {
+      enemyState = "tell";
+      enemyTimer++;
+    }
     else if (enemyTimer < 50) {
   ///////////////////////// WHEN THE SLIME SPITS THE BALL GO TOWARDS WERE EVER THE PLAYER IS /////////////////////////////////////////////
       enemyBallX = enemyX + 80;
@@ -755,6 +757,7 @@ function drawSecondBoss() {
 ////
 //
 }
+
 // THE RANDOM BIRD ON THE TOP RIGHT CORNER OF SCREEN DOESNT WORK!!! //
 function randomBird() {
   // Moving up at a constant speed
