@@ -62,4 +62,5 @@ sorta like a rpg 2d platformer
 ### Jan.18 ### 
  - found some glitches and bugs with the boss fight and parallax effect
 ### Jan.19 ### 
- - planing to hand in project
+ - handing in project
+ - solved all the errors 

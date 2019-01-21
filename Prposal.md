@@ -2,7 +2,7 @@ Proposal
 ====================
 
 I want to build a game where there is a PLAYER has to defeat this slime boss 
-sorta like a rpg 2d platformer
+sorta like a rpg 2d platformer but have like a cuphead combat system
 
 ### Need to Have List ###
  - basic tutorial 
